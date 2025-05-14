@@ -17,7 +17,7 @@ class GameObject:
     def get_components(self, _type: type = None, inheritance:bool = False) -> list[Component]:
         if _type is None:
             return self._components
-        ret = [c for c in self._components if not inheritance and isinstance(c, _type) or inheritance and issubclass(type(c), Script)]
+        ret = [c for c in self._components if not inheritance and type(c)==_type or inheritance and issubclass(type(c), Script)]
         return ret
 
     def update(self, delta_time):
@@ -53,9 +53,10 @@ class Script(Component):
 
 
 class Transform(Component):
-    def __init__(self, parent: GameObject, position: list[float], angle: float):
+    def __init__(self, parent: GameObject, position: list[float] = [0,0], angle: float = 0., scale: list[float] = [1., 1.]):
         Component.__init__(self, parent)
         self._x, self._y = position
+        self._scale_x, self._scale_y = scale
         self._angle = angle
 
     def get_global(self):
@@ -83,29 +84,35 @@ class Transform(Component):
         
         return global_x, global_y, global_angle
     
-    def move(self, dx:float, dy:float):
+    def move(self, dx:float = 0, dy:float = 0):
         self._x+=dx
         self._y+=dy
     
     def rotate(self, angle:float):
         self._angle+=angle
+    
+    def scale(self, scale_x = 1., scale_y = 1.):
+        self._scale_x = scale_x
+        self._scale_y = scale_y
 
-class Rectangle(Transform):
-    def __init__(self, parent: GameObject = None, dimensions: tuple[float] = (100, 100), color: tuple[int] = (0xFF, 0xFF, 0xFF), position: tuple[float]= [0,0], angle: float = 0):
-        Transform.__init__(self, parent, position, angle)
+
+class Renderable(Transform):
+    def __init__(self, parent: GameObject = None, position: list[float] = [0, 0], angle: float = 0., scale:list[float] = [1., 1.], layer: int = 0):
+        Transform.__init__(self, parent, position, angle, scale)
+        self._layer = layer
+
+class Rectangle(Renderable):
+    def __init__(self, parent: GameObject = None, dimensions: tuple[float] = (100, 100), color: tuple[int] = (0xFF, 0xFF, 0xFF), position: list[float]= [0,0], angle: float = 0, layer:int = 0):
+        Renderable.__init__(self, parent, position, angle, [1,1], layer)
         self._dimensions = dimensions
         self._color = color
-        self._scale = (1, 1)
     
     def reshape(self, dimensions:tuple[float]):
         self._dimensions = dimensions
 
-    def scale(self, scaling):
-        self._scale = scaling
 
-class Image(Rectangle):
-    def __init__(self, parent:GameObject = None, path:str = "none", dimensions: tuple[float] = (-1, -1), scale:tuple[float] = (1., 1.), position: list[float] = [0, 0], angle: float = 0):
-        Rectangle.__init__(self, parent, dimensions, (0, 0, 0), position, angle)
+class Image(Renderable):
+    def __init__(self, parent:GameObject = None, path:str = "none", dimensions: tuple[float] = (-1, -1), scale:tuple[float] = (1., 1.), position: list[float] = [0, 0], angle: float = 0, layer: int = 0):
+        Renderable.__init__(self, parent, position, angle, scale, layer)
         self._path = path
-        self._scale_x, self._scale_y = scale
 

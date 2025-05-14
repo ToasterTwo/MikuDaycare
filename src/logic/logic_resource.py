@@ -18,13 +18,15 @@ class LogicResource:
             ResourceType.IMAGE, 
             path = img._path,
             scale = (img._scale_x, img._scale_y), 
-            global_position = global_position)
+            global_position = global_position, 
+            layer = img._layer)
 
     @staticmethod
     def of_shape(shape: Rectangle):
         return LogicResource(
             ResourceType.SHAPE, 
             dimensions = shape._dimensions,
-            scale = shape._scale,
+            scale = (shape._scale_x, shape._scale_y),
             color = shape._color,
-            global_position = shape.get_global())
+            global_position = shape.get_global(),
+            layer = shape._layer)

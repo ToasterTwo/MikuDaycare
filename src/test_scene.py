@@ -6,9 +6,9 @@ import logic.game_components as gcomp
 
 
 def make()->scn.Scene:
-    bar_shape = gcomp.Rectangle(dimensions=(100, 10), color = (0xff, 0, 0), position=(0, 0))
-    bar_script = logic.progress_bar.ProgressBar(None, 10, 10, bar_shape, logic.progress_bar.BarMode.HORIZONTAL)
-    bar_transform = gcomp.Transform(None, (400, 400), 0)
+    bar_shape = gcomp.Rectangle(dimensions=(100, 100), color = (0xff, 0, 0), position=(0, 0))
+    bar_script = logic.progress_bar.ProgressBar(None, 10, 10, bar_shape, logic.progress_bar.BarMode.VERTICAL, logic.progress_bar.BarAligngment.BOTTOMRIGHT)
+    bar_transform = gcomp.Transform(None, (300, 150), 0)
     happy_bar = gcomp.GameObject(bar_shape, bar_script, bar_transform)
 
     creature_brain = logic.creature.CreatureBehaviour(None, happy_bar)

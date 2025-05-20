@@ -6,7 +6,7 @@ except ModuleNotFoundError:
 from logic import logic_resource as lr
 
 class Window:
-    def __init__(self, size:tuple[int], title: str):
+    def __init__(self, size:tuple[int, int], title: str):
         if not pygame.get_init():
             pygame.init()
 
@@ -19,19 +19,32 @@ class Window:
     def render(self, objects: lr.LogicResource):
         self._window.fill((0, 0, 0))
         
-        for obj in objects:
+        for obj in sorted(objects, key = lambda o: o.layer):
             match obj._type:
                 case lr.ResourceType.IMAGE:
-                    self._window.blit(manager.fetch_image(obj._data["path"]), obj._data["global_position"][:2])
+                    img = manager.fetch_image(obj.path)
+                    top, left, width, height = obj.rect
+                    pos = obj.global_position[:2]
+                    if height < 0:
+                        height = img.get_height()
+                        pos[1]-=height/2
+                    if width < 0:
+                        width = img.get_width()
+                        pos[0]-=width/2
+
+
+                    text_rect = pygame.Rect(top, left, width, height)
+                    self._window.blit(img, pos, text_rect)
+                    # pygame.draw.circle(self._window, (0x00, 0xFF, 0x00), (pos[0]+width/2, pos[1]+height/2), 1.5)
                 
                 case lr.ResourceType.SHAPE:
-                    center_x, center_y = obj._data["global_position"][:2]
-                    width, height = obj._data["dimensions"]
-                    scale_x, scale_y = obj._data["scale"]
+                    center_x, center_y = obj.global_position[:2]
+                    width, height = obj.dimensions
+                    scale_x, scale_y = obj.scale
                     width *= scale_x
                     height*= scale_y
                     shape = pygame.Rect(center_x-width/2, center_y-height/2, width, height)
-                    pygame.draw.rect(self._window, obj._data["color"], shape)
+                    pygame.draw.rect(self._window, obj.color, shape)
 
         pygame.display.update()
 

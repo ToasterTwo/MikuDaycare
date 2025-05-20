@@ -7,14 +7,14 @@ class Component:
     def set_parent(self, new_parent):
         self._parent = new_parent
 
-class GameObject:
-    def __init__(self, *components:Component, parent = None):
+class GameObject(Component):
+    def __init__(self, *components:Component, parent : Component | None= None):
+        Component.__init__(self, parent)
         self._components = list(components)
         for comp in self._components:
             comp.set_parent(self)
-        self._parent = parent
     
-    def get_components(self, _type: type = None, inheritance:bool = False) -> list[Component]:
+    def get_components(self, _type: type | None = None, inheritance:bool = False) -> list:
         if _type is None:
             return self._components
         ret = [c for c in self._components if not inheritance and type(c)==_type or inheritance and issubclass(type(c), Script)]
@@ -38,10 +38,10 @@ class GameObject:
         for comp in components:
             comp.set_parent(self)
             self._components.append(comp)
-
+    
 
 class Script(Component):
-    def __init__(self, parent: GameObject):
+    def __init__(self, parent: GameObject|None = None):
         Component.__init__(self, parent)
     
     def update(self, delta_time:float):
@@ -53,14 +53,14 @@ class Script(Component):
 
 
 class Transform(Component):
-    def __init__(self, parent: GameObject, position: list[float] = [0,0], angle: float = 0., scale: list[float] = [1., 1.]):
+    def __init__(self, parent: GameObject | None = None, position: list[float] = [0,0], angle: float = 0., scale: list[float] = [1., 1.]):
         Component.__init__(self, parent)
         self._x, self._y = position
         self._scale_x, self._scale_y = scale
         self._angle = angle
 
     def get_global(self):
-        root: GameObject = self._parent
+        root = self._parent
         global_x = self._x
         global_y = self._y
         global_angle = self._angle
@@ -97,22 +97,48 @@ class Transform(Component):
 
 
 class Renderable(Transform):
-    def __init__(self, parent: GameObject = None, position: list[float] = [0, 0], angle: float = 0., scale:list[float] = [1., 1.], layer: int = 0):
+    def __init__(self, 
+                 parent: GameObject | None= None, 
+                 position: list[float] = [0, 0], 
+                 angle: float = 0., 
+                 scale:list[float] = [1., 1.], 
+                 layer: int = 0):
         Transform.__init__(self, parent, position, angle, scale)
         self._layer = layer
 
 class Rectangle(Renderable):
-    def __init__(self, parent: GameObject = None, dimensions: tuple[float] = (100, 100), color: tuple[int] = (0xFF, 0xFF, 0xFF), position: list[float]= [0,0], angle: float = 0, layer:int = 0):
+    def __init__(self, 
+                 parent: GameObject | None= None, 
+                 dimensions: tuple[float, float] = (100, 100), 
+                 color: tuple[int, int, int] = (0xFF, 0xFF, 0xFF), 
+                 position: list[float]= [0.,0.], 
+                 angle: float = 0, 
+                 layer:int = 0):
         Renderable.__init__(self, parent, position, angle, [1,1], layer)
         self._dimensions = dimensions
         self._color = color
     
-    def reshape(self, dimensions:tuple[float]):
+    def reshape(self, dimensions:tuple[float, float]):
         self._dimensions = dimensions
 
 
 class Image(Renderable):
-    def __init__(self, parent:GameObject = None, path:str = "none", dimensions: tuple[float] = (-1, -1), scale:tuple[float] = (1., 1.), position: list[float] = [0, 0], angle: float = 0, layer: int = 0):
-        Renderable.__init__(self, parent, position, angle, scale, layer)
+    def __init__(self, 
+                 parent:GameObject | None = None, 
+                 path:str = "none", 
+                 scale:list[float] = [1., 1.], 
+                 position: list[float] = [0, 0], 
+                 angle: float = 0, 
+                 layer: int = 0,
+                 texture_rect: tuple[int, int, int, int] = (0, 0, -1, -1)):
+        
+        offset = [0., 0.]
+        if texture_rect[2]>0:
+            offset[0]=-texture_rect[2]/2
+        if texture_rect[3]>0:
+            offset[1]=-texture_rect[3]/2
+
+        Renderable.__init__(self, parent, [position[0]+offset[0], position[1]+offset[1]], angle, scale, layer)
         self._path = path
+        self._texture_rect = texture_rect
 

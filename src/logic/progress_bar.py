@@ -1,9 +1,6 @@
 import pygame
 from enum import Enum
-try:
-    from logic.game_components import *
-except ModuleNotFoundError:
-    from game_components import *
+from logic.game_components import *
 
 class BarMode(Enum):
     HORIZONTAL = 0b0
@@ -16,7 +13,7 @@ class BarAligngment(Enum):
 
 
 class ProgressBar(Script):
-    def __init__(self, parent: GameObject, max_value: int, start_value: int, bar_image: Rectangle, mode: BarMode = BarMode.VERTICAL, alignment = BarAligngment.CENTER):
+    def __init__(self, parent: GameObject |None, max_value: int, start_value: int, bar_image: Rectangle, mode: BarMode = BarMode.VERTICAL, alignment = BarAligngment.CENTER):
         Script.__init__(self, parent)
         self._max_value = max_value
         self.value = start_value

@@ -1,0 +1,6 @@
+body: (0, 0), 50x145
+hair: (50, 0), 110x105
+right arm: (160, 0) 24x43
+left arm: (160, 43) 24x43
+eyeset: (50, 105) 30x15 3
+mouthset (50, 120) 15x7 6

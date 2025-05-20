@@ -9,7 +9,8 @@ class ResourceType(Enum):
 class LogicResource:
     def __init__(self, r_type: ResourceType, **kwargs):
         self._type = r_type
-        self._data = kwargs
+        for key in kwargs:
+            self.__dict__[key] = kwargs[key]
 
     @staticmethod
     def of_image(img: Image):
@@ -19,7 +20,8 @@ class LogicResource:
             path = img._path,
             scale = (img._scale_x, img._scale_y), 
             global_position = global_position, 
-            layer = img._layer)
+            layer = img._layer,
+            rect = img._texture_rect)
 
     @staticmethod
     def of_shape(shape: Rectangle):
@@ -29,4 +31,4 @@ class LogicResource:
             scale = (shape._scale_x, shape._scale_y),
             color = shape._color,
             global_position = shape.get_global(),
-            layer = shape._layer)
+            layer = shape._layer,)

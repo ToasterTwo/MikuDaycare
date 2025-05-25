@@ -1,10 +1,12 @@
 from pygame import event, time
+from typing import Any
+import math
 
 class Component:
-    def __init__(self, parent = None):
+    def __init__(self, parent :Any  = None):
         self._parent = parent
     
-    def set_parent(self, new_parent):
+    def set_parent(self, new_parent: Any):
         self._parent = new_parent
 
 class GameObject(Component):
@@ -142,3 +144,49 @@ class Image(Renderable):
         self._path = path
         self._texture_rect = texture_rect
 
+class Hitbox(Component):
+    ALL_BOXES = []
+    def __init__(self, 
+                 parent :GameObject |None = None,
+                 top: float = 0,
+                 left: float = 0,
+                 height: float = 1,
+                 width: float = 1):
+        Component.__init__(self, parent)
+        self._top = top
+        self._left = left
+        self._bottom = top+height
+        self._right = left+width
+        Hitbox.ALL_BOXES.append(self)
+    
+    def get_global_bounds(self) -> tuple[float, float, float, float]:
+        parent_coords:tuple[float, float, float] = self._parent.get_components(Transform)[0].get_global()
+
+        return self._top+parent_coords[1], self._left+parent_coords[0], self._bottom + parent_coords[1], self._right + parent_coords[0]
+
+    def move(self, dx:float, dy:float) -> None:
+        self._top += dy
+        self._bottom += dy
+        self._left += dx
+        self._right += dx
+    
+    def set_bounds(self, top: float, left: float, height: float, width: float) -> None:
+        self._top = top
+        self._left = left
+        self._right = top+height
+        self._bottom = left+width
+
+    def collides(self, other) -> bool:
+        x : bool = not (self._left>other._right or other._left>self._right)
+        y : bool = not (self._top>other._bottom or other._top>self._bottom)
+
+        return x and y
+
+
+    def get_colliding(self) -> list[Component]:
+        collided: list[Component] = []
+        for other in Hitbox.ALL_BOXES:
+            if self.collides(other):
+                collided.append(other)
+        
+        return collided

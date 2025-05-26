@@ -1,6 +1,9 @@
+from dis import CACHE
+
 from logic.game_components import *
 from enum import Enum
 from logic.logic_resource import *
+import json
 
 class Scene:
     def __init__(self):
@@ -30,3 +33,15 @@ class Scene:
 
         return tuple(resources)
 
+
+class SceneLoader:
+
+    @staticmethod
+    def from_json(filepath:str):
+        parsed = None
+        with open(filepath, mode="r",encoding="UTF-8") as file:
+            parsed = json.loads(file.read())
+
+        object_dict = {}
+        for o in parsed:
+            print(o, parsed[o])

@@ -3,11 +3,23 @@ from typing import Any
 import math
 
 class Component:
+    NAME_MAP:dict[str, type] = {}
     def __init__(self, parent :Any  = None):
         self._parent = parent
-    
+
+    def __init_subclass__(cls, **kwargs):
+        typename = cls.__name__
+        if typename not in Component.NAME_MAP:
+            Component.NAME_MAP[typename] = cls
+
+
     def set_parent(self, new_parent: Any):
         self._parent = new_parent
+
+
+    @staticmethod
+    def from_name(name: str, *args):
+        return Component.NAME_MAP[name](*args)
 
 class GameObject(Component):
     def __init__(self, *components:Component, parent : Component | None= None):
@@ -45,12 +57,13 @@ class GameObject(Component):
 class Script(Component):
     def __init__(self, parent: GameObject|None = None):
         Component.__init__(self, parent)
-    
+
     def update(self, delta_time:float):
         pass
 
     def on_event(self, _event:event.Event):
         pass
+
 
 
 

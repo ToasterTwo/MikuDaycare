@@ -34,3 +34,6 @@ def make()->scn.Scene:
     main_scene.add_objects(happy_bar, miku, hair, eyes, mouth, left_arm, right_arm)
 
     return main_scene
+
+if __name__=="__main__":
+    scene =scn.SceneLoader.from_json("resources/scenes/sample_scene.json")

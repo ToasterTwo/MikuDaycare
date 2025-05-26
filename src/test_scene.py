@@ -1,6 +1,7 @@
 import logic.scene as scn
 import logic.progress_bar
 import logic.creature
+import logic.cursor
 
 def make()->scn.Scene:
 

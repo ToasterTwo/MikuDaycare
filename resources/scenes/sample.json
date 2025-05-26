@@ -114,6 +114,18 @@
                 "Type": "Transform",
                 "args":[[0, -40], 0],
                 "kwargs":{}
+            },
+            {
+                "Name":"mouth_hitbox",
+                "Type":"Hitbox",
+                "args":[-7, -15, 14, 30],
+                "kwargs":{}
+            },
+            {
+                "Name":"mouth_script",
+                "Type":"MouthScript",
+                "args":["miku_mouth.mouth_sprite", [6, 1], [50, 120]],
+                "kwargs":{}
             }
         ]
     },
@@ -153,6 +165,29 @@
                 "Name": "body_transform",
                 "Type": "Transform",
                 "args":[[-20, -10], 0],
+                "kwargs":{}
+            }
+        ]
+    },
+    "cursor_follower": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name": "cursor_transform",
+                "Type": "Transform",
+                "args": [[0,0], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"cursor_hitbox",
+                "Type":"Hitbox",
+                "args":[-2, -2, 4, 4],
+                "kwargs":{}
+            },
+            {
+                "Name":"cursor_script",
+                "Type":"CursorScript",
+                "args":["cursor_follower.cursor_transform", "cursor_follower.cursor_hitbox"],
                 "kwargs":{}
             }
         ]

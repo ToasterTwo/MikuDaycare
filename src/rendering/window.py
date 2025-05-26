@@ -16,7 +16,7 @@ class Window:
     def quit(self):
         pygame.display.quit()
     
-    def render(self, objects: lr.LogicResource):
+    def render(self, objects: tuple[lr.LogicResource, ...]):
         self._window.fill((0, 0, 0))
         
         for obj in sorted(objects, key = lambda o: o.layer):
@@ -35,7 +35,7 @@ class Window:
 
                     text_rect = pygame.Rect(top, left, width, height)
                     self._window.blit(img, pos, text_rect)
-                    # pygame.draw.circle(self._window, (0x00, 0xFF, 0x00), (pos[0]+width/2, pos[1]+height/2), 1.5)
+                    # pygame.draw.circle(self._window, (0x00, 0xFF, 0x00), (pos[0], pos[1]), 1.5)
                 
                 case lr.ResourceType.SHAPE:
                     center_x, center_y = obj.global_position[:2]
@@ -44,9 +44,11 @@ class Window:
                     width *= scale_x
                     height*= scale_y
                     shape = pygame.Rect(center_x-width/2, center_y-height/2, width, height)
-                    pygame.draw.rect(self._window, obj.color, shape)
+                    shape_surf = pygame.Surface(shape.size, pygame.SRCALPHA)
+                    pygame.draw.rect(shape_surf, obj.color, shape_surf.get_rect())
+                    self._window.blit(shape_surf, shape)
 
-        pygame.display.update()
+        pygame.display.flip()
 
     def get_inputs(self):
         return pygame.event.get()

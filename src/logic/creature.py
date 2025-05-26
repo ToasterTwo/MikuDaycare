@@ -1,5 +1,6 @@
 import pygame
 from logic.game_components import *
+from logic.sprite_controller import SpriteController
 
 
 class CreatureBehaviour(Script):
@@ -23,17 +24,13 @@ class CreatureBehaviour(Script):
             self._happiness += 1
             self._happy_bar.message("set_value", self._happiness)
 
-spritepath = "resources\\images\\spritesheet.png"
 
-body_image = Image(path = spritepath, texture_rect=(0, 0, 50, 145),layer=0)
-hair_image = Image(path = spritepath, texture_rect=(50, 0, 110, 105), layer=2)
-eyes_image = Image(path = spritepath, texture_rect=(50, 105, 30, 15), layer=1)
-mouth_image = Image(path = spritepath, texture_rect=(50, 120, 15, 7), layer=1)
-left_arm_image = Image(path = spritepath, texture_rect=(160, 0, 24, 43), layer=1)
-right_arm_image = Image(path = spritepath, texture_rect=(160, 43, 24, 43), layer=1)
+class MouthScript(SpriteController):
+    def __init__(self, parent: GameObject, mouth_sprite: Image, sprite_grid: tuple[int, int], origin: tuple[int, int]):
+        SpriteController.__init__(self, parent, mouth_sprite, sprite_grid, origin)
+    
+    def cursor_enter(self):
+        self.switch_sprite(1)
 
-hair_sprite = GameObject(hair_image, Transform(position=[-5, -27]))
-eyes_sprite = GameObject(eyes_image, Transform(position=[0, -50]))
-mouth_sprite = GameObject(mouth_image, Transform(position=[0, -40]))
-left_arm_sprite = GameObject(left_arm_image, Transform(position=[18, -10]))
-right_arm_sprite= GameObject(right_arm_image, Transform(position=[-20, -10]))
+    def cursor_exit(self):
+        self.switch_sprite(0)

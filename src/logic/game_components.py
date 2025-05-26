@@ -4,25 +4,24 @@ import math
 
 class Component:
     NAME_MAP:dict[str, type] = {}
-    def __init__(self, parent :Any  = None):
+    def __init__(self, parent :Any  = None, active: bool = True):
         self._parent = parent
+        self._active = True
 
     def __init_subclass__(cls, **kwargs):
         typename = cls.__name__
         if typename not in Component.NAME_MAP:
             Component.NAME_MAP[typename] = cls
 
-
     def set_parent(self, new_parent: Any):
         self._parent = new_parent
 
-
     @staticmethod
-    def from_name(name: str, *args):
-        return Component.NAME_MAP[name](*args)
+    def from_name(name: str, parent, *args, **kwargs):
+        return Component.NAME_MAP[name](parent, *args, **kwargs)
 
 class GameObject(Component):
-    def __init__(self, *components:Component, parent : Component | None= None):
+    def __init__(self, parent : Component | None= None, *components:Component):
         Component.__init__(self, parent)
         self._components = list(components)
         for comp in self._components:
@@ -33,6 +32,10 @@ class GameObject(Component):
             return self._components
         ret = [c for c in self._components if not inheritance and type(c)==_type or inheritance and issubclass(type(c), Script)]
         return ret
+    
+    def init(self):
+        for script in self.get_components(Script, True):
+            script.init()
 
     def update(self, delta_time):
         for script in self.get_components(Script, True):
@@ -57,6 +60,9 @@ class GameObject(Component):
 class Script(Component):
     def __init__(self, parent: GameObject|None = None):
         Component.__init__(self, parent)
+    
+    def init(self):
+        pass
 
     def update(self, delta_time:float):
         pass
@@ -89,6 +95,8 @@ class Transform(Component):
             root_y = 0
             root_angle = 0
             for t in transforms:
+                if t == self:
+                    continue
                 root_x += t._x
                 root_y += t._y
                 root_angle += t._angle
@@ -170,10 +178,17 @@ class Hitbox(Component):
         self._left = left
         self._bottom = top+height
         self._right = left+width
-        Hitbox.ALL_BOXES.append(self)
+        self._colliding  = []
+        if not self in Hitbox.ALL_BOXES:
+            Hitbox.ALL_BOXES.append(self)
     
     def get_global_bounds(self) -> tuple[float, float, float, float]:
-        parent_coords:tuple[float, float, float] = self._parent.get_components(Transform)[0].get_global()
+        master_transform = self._parent.get_components(Transform)
+
+        if len(master_transform) < 1:
+            return self._top, self._left, self._bottom, self._right 
+        
+        parent_coords:tuple[float, float, float] = master_transform[0].get_global()
 
         return self._top+parent_coords[1], self._left+parent_coords[0], self._bottom + parent_coords[1], self._right + parent_coords[0]
 
@@ -183,6 +198,18 @@ class Hitbox(Component):
         self._left += dx
         self._right += dx
     
+    @staticmethod
+    def recalculate_collisions():
+        for box in Hitbox.ALL_BOXES:
+            box._colliding.clear()
+        for i in range(len(Hitbox.ALL_BOXES)):
+            box: Hitbox= Hitbox.ALL_BOXES[i]
+            for j in range(i+1, len(Hitbox.ALL_BOXES)):
+                other:Hitbox = Hitbox.ALL_BOXES[j]
+                if box.collides(other):
+                    box._colliding.append(other)
+                    other._colliding.append(box)
+    
     def set_bounds(self, top: float, left: float, height: float, width: float) -> None:
         self._top = top
         self._left = left
@@ -190,16 +217,14 @@ class Hitbox(Component):
         self._bottom = left+width
 
     def collides(self, other) -> bool:
-        x : bool = not (self._left>other._right or other._left>self._right)
-        y : bool = not (self._top>other._bottom or other._top>self._bottom)
+        me = self.get_global_bounds()
+        them = other.get_global_bounds()
+
+        x : bool = not (me[1]>them[3] or them[1]>me[3])
+        y : bool = not (me[0]>them[2] or them[0]>me[2])
 
         return x and y
 
 
-    def get_colliding(self) -> list[Component]:
-        collided: list[Component] = []
-        for other in Hitbox.ALL_BOXES:
-            if self.collides(other):
-                collided.append(other)
-        
-        return collided
+    def get_colliding(self) -> list[Component]:        
+        return self._colliding

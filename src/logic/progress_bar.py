@@ -13,12 +13,18 @@ class BarAligngment(Enum):
 
 
 class ProgressBar(Script):
-    def __init__(self, parent: GameObject |None, max_value: int, start_value: int, bar_image: Rectangle, mode: BarMode = BarMode.VERTICAL, alignment = BarAligngment.CENTER):
+    def __init__(self, parent: GameObject |None, max_value: int, start_value: int, bar_image: Rectangle, mode: BarMode | str = BarMode.VERTICAL, alignment = BarAligngment.CENTER):
         Script.__init__(self, parent)
         self._max_value = max_value
         self.value = start_value
         self._image: Rectangle = bar_image
+        
+        if type(mode) == str:
+            mode = BarMode.__dict__[mode]
         self._mode = mode
+
+        if type(alignment) == str:
+            alignment = BarAligngment.__dict__[alignment]
         self._alignment = alignment
 
     def set_value(self, new_value):

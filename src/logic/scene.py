@@ -20,6 +20,10 @@ class Scene:
         for obj in self._objects:
             obj.on_event(event)
     
+    def init(self):
+        for obj in self._objects:
+            obj.init()
+    
     def get_resources(self) -> tuple[LogicResource, ...]:
         resources = []
         for obj in self._objects:
@@ -38,7 +42,7 @@ class Scene:
                         ResourceType.SHAPE, 
                         dimensions = [global_bounds[3]-global_bounds[1], global_bounds[2]-global_bounds[0]],
                         scale = [1, 1],
-                        color = [0x00, 0xff, 0x00, 0xf0],
+                        color = [0x00, 0xff, 0x00, 0x9f],
                         global_position = [gx, gy],
                         layer = 11
                         ))

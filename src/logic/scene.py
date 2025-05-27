@@ -42,8 +42,8 @@ class Scene:
                         ResourceType.SHAPE, 
                         dimensions = [global_bounds[3]-global_bounds[1], global_bounds[2]-global_bounds[0]],
                         scale = [1, 1],
-                        color = [0x00, 0xff, 0x00, 0x9f],
-                        global_position = [gx, gy],
+                        color = [0x00, 0xff, 0x00, 0x0f],
+                        global_position = [gx, gy, 0],
                         layer = 11
                         ))
 

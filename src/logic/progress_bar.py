@@ -18,7 +18,7 @@ class ProgressBar(Script):
         self._max_value = max_value
         self.value = start_value
         self._image: Rectangle = bar_image
-        
+
         if type(mode) == str:
             mode = BarMode.__dict__[mode]
         self._mode = mode
@@ -28,6 +28,8 @@ class ProgressBar(Script):
         self._alignment = alignment
 
     def set_value(self, new_value):
+        if new_value<0:
+            return
         self.value = new_value
         scale = self.value/self._max_value
         width, height = self._image._dimensions

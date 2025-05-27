@@ -15,6 +15,8 @@ class CreatureBehaviour(Script):
         self._inner_clock+=delta_time
         if self._inner_clock>2:
             self._happiness-=1
+            if self._happiness < 0:
+                self._happiness = 0
             self._inner_clock = 0
             self._happy_bar.message("set_value", self._happiness)
             

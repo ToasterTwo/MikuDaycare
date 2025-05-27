@@ -191,5 +191,44 @@
                 "kwargs":{}
             }
         ]
+    },
+    "food": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name": "food_transform",
+                "Type": "Transform",
+                "args": [[300,300], 0],
+                "kwargs": {}
+            },
+            {
+                "Name": "food_sprite",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [0, 145, 20, 20],
+                    "layer": 0
+                }
+            },
+            {
+                "Name":"food_hitbox",
+                "Type":"Hitbox",
+                "args":[-10,-10,20,20],
+                "kwargs":{}
+            },
+            {
+                "Name":"food_controller",
+                "Type":"FoodScript",
+                "args":["food.sprite_controller", "food.food_hitbox", "food.food_sprite"],
+                "kwargs":{}
+            },
+            {
+                "Name":"sprite_controller",
+                "Type":"SpriteController",
+                "args":["food.food_sprite", [3, 1], [0, 145]],
+                "kwargs":{}
+            }
+        ]
     }
 }

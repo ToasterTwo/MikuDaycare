@@ -1,8 +1,5 @@
-import logic.scene as scn
-import logic.progress_bar
-import logic.creature
-import logic.cursor
+from logic import *
 
-def make()->scn.Scene:
+def make()->scene.Scene:
 
-    return scn.from_json("resources/scenes/sample.json")
+    return scene.from_json("resources/scenes/sample.json")

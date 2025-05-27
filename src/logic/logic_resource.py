@@ -1,3 +1,4 @@
+from typing import Any
 from logic.game_components import *
 from enum import Enum
 
@@ -11,6 +12,9 @@ class LogicResource:
         self._type = r_type
         for key in kwargs:
             self.__dict__[key] = kwargs[key]
+        
+    def __getattribute__(self, name: str) -> Any:
+        return object.__getattribute__(self, name)
 
     @staticmethod
     def of_image(img: Image):

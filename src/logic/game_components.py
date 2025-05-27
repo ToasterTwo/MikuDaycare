@@ -155,13 +155,7 @@ class Image(Renderable):
                  layer: int = 0,
                  texture_rect: tuple[int, int, int, int] = (0, 0, -1, -1)):
         
-        offset = [0., 0.]
-        if texture_rect[2]>0:
-            offset[0]=-texture_rect[2]/2
-        if texture_rect[3]>0:
-            offset[1]=-texture_rect[3]/2
-
-        Renderable.__init__(self, parent, [position[0]+offset[0], position[1]+offset[1]], angle, scale, layer)
+        Renderable.__init__(self, parent, position, angle, scale, layer)
         self._path = path
         self._texture_rect = texture_rect
 

@@ -11,6 +11,7 @@ class Game:
         self._running = False
 
     def run(self):
+        self._logic.init()
         self._running = True
         clock = pygame.time.Clock()
         while(self._running):

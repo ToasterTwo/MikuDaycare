@@ -36,7 +36,8 @@ class Window:
                     sprite = manager.cutout_rect(base, text_rect)
                     img = manager.transform(sprite, obj.scale, obj.global_position[2])
 
-                    pos = (pos[0]-img.get_rect().width/2, pos[1]-img.get_rect().height/2)
+                    pos = (pos[0]-img.get_rect().width/2, 
+                           self._window.get_height()-pos[1]-img.get_rect().height/2)
 
                     self._window.blit(img, pos, img.get_rect())
                     # pygame.draw.circle(self._window, (0x00, 0xFF, 0x00), (pos[0], pos[1]), 1.5)
@@ -47,7 +48,7 @@ class Window:
                     scale_x, scale_y = obj.scale
                     width *= scale_x
                     height*= scale_y
-                    shape = pygame.Rect(center_x-width/2, center_y-height/2, width, height)
+                    shape = pygame.Rect(center_x-width/2, self._window.get_height()-center_y-height/2, width, height)
                     shape_surf = pygame.Surface(shape.size, pygame.SRCALPHA)
                     shape_surf = pygame.transform.rotate(shape_surf, obj.global_position[2])
                     pygame.draw.rect(shape_surf, obj.color, shape_surf.get_rect())

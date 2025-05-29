@@ -11,8 +11,12 @@ class CreatureBehaviour(Script):
         self._inner_clock : float = 0.
         self._happy_bar : GameObject = happy_bar
     
+    def init(self):
+        self._transform = self._parent.get_components(Transform)[0]
+    
     def update(self, delta_time: float):
         self._inner_clock+=delta_time
+        self._transform._angle+=90*delta_time
         if self._inner_clock>2:
             self._happiness-=1
             if self._happiness < 0:

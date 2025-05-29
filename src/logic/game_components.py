@@ -86,23 +86,21 @@ class Transform(Component):
         global_y = self._y
         global_angle = self._angle
         while root != None:
-            transforms:list[Transform] = root.get_components(Transform)
+            m_transform:list[Transform] = root.get_components(Transform)
             
-            if len(transforms)<1:
+            if len(m_transform)<1:
                 continue
+            
+            parent_transform = m_transform[0]
 
-            root_x = 0
-            root_y = 0
-            root_angle = 0
-            for t in transforms:
-                if t == self:
-                    continue
-                root_x += t._x
-                root_y += t._y
-                root_angle += t._angle
-            global_x += root_x/len(transforms)
-            global_y += root_y/len(transforms)
-            global_angle += root_angle/len(transforms)
+            if parent_transform != self:
+                root_tilt = parent_transform._angle * math.pi /180
+                root_space_x = global_x*math.cos(root_tilt)-global_y*math.sin(root_tilt)
+                root_space_y = global_x*math.sin(root_tilt)+global_y*math.cos(root_tilt)
+                global_x = parent_transform._x+root_space_x
+                global_y = parent_transform._y+root_space_y
+                global_angle+=parent_transform._angle
+            
             root = root._parent
         
         return global_x, global_y, global_angle

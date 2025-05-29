@@ -18,7 +18,7 @@
             {
                 "Name": "bar_transform",
                 "Type": "Transform",
-                "args": [[0, 0], 0],
+                "args": [[50, 10], 0],
                 "kwargs": {}
             }
         ]
@@ -72,7 +72,7 @@
             {
                 "Name": "hair_transform",
                 "Type": "Transform",
-                "args":[[-5, -27], 0],
+                "args":[[-5, 27], 0],
                 "kwargs":{}
             }
         ]
@@ -92,7 +92,7 @@
             {
                 "Name": "eyes_transform",
                 "Type": "Transform",
-                "args":[[0, -50], 0],
+                "args":[[0, 50], 0],
                 "kwargs":{}
             }
         ]
@@ -112,7 +112,7 @@
             {
                 "Name": "mouth_transform",
                 "Type": "Transform",
-                "args":[[0, -40], 0],
+                "args":[[0, 40], 0],
                 "kwargs":{}
             },
             {
@@ -144,7 +144,7 @@
             {
                 "Name": "left_arm_transform",
                 "Type": "Transform",
-                "args":[[18, -10], 0],
+                "args":[[18, 10], 0],
                 "kwargs":{}
             }
         ]
@@ -164,7 +164,7 @@
             {
                 "Name": "body_transform",
                 "Type": "Transform",
-                "args":[[-20, -10], 0],
+                "args":[[-20, 10], 0],
                 "kwargs":{}
             }
         ]
@@ -187,7 +187,7 @@
             {
                 "Name":"cursor_script",
                 "Type":"CursorScript",
-                "args":["cursor_follower.cursor_transform", "cursor_follower.cursor_hitbox"],
+                "args":["cursor_follower.cursor_transform", "cursor_follower.cursor_hitbox", 500],
                 "kwargs":{}
             }
         ]

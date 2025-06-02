@@ -14,11 +14,13 @@ class Scene:
     def update(self, delta_time: float):
         Hitbox.recalculate_collisions()
         for obj in self._objects:
-            obj.update(delta_time)
+            if obj._active:
+                obj.update(delta_time)
     
     def on_event(self, event):
         for obj in self._objects:
-            obj.on_event(event)
+            if obj._active:
+                obj.on_event(event)
     
     def init(self):
         for obj in self._objects:
@@ -27,7 +29,9 @@ class Scene:
     def get_resources(self) -> tuple[LogicResource, ...]:
         resources = []
         for obj in self._objects:
-            for comp in obj.get_components():
+            if not obj._active:
+                continue
+            for comp in filter(lambda o: o._active, obj.get_components()):
                 if type(comp) == Image:
                     resources.append(LogicResource.of_image(comp))
                 
@@ -64,6 +68,8 @@ def from_json(filepath:str):
             parent = object_dict[parent_name]
         
         object_dict[o] = GameObject(parent = parent)
+        if "active" in parsed[o]:
+            object_dict[o]._active = parsed[o]["active"] > 0
         objects.append(object_dict[o])
     
     incomplete = []
@@ -95,7 +101,9 @@ def from_json(filepath:str):
                         incomplete.append(comp)
                     kwargs[a] = requested
             
-            comp_obj = Component.from_name(comp["Type"], object_dict[o], *args, **kwargs)
+            comp_obj :Component= Component.from_name(comp["Type"], object_dict[o], *args, **kwargs)
+            if "active" in comp:
+                comp_obj._active = comp["active"] > 0
             object_dict[comp["Name"]] = comp_obj
             object_dict[o].add_components(comp_obj)
             
@@ -103,9 +111,9 @@ def from_json(filepath:str):
     for revisited in incomplete:
         args = revisited["args"]
         for i in range(len(args)):
+            if type(args[i]) == list:
+                continue
             if args[i] in object_dict:
-                if type(args[i]) == list:
-                    continue
                 args[i] = object_dict[args[i]]
         
         kwargs = revisited["kwargs"]

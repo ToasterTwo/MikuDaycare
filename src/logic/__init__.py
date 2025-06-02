@@ -5,4 +5,5 @@ __all__ = ["creature",
            "logic_resource", 
            "progress_bar",
            "scene",
-           "sprite_controller"]
+           "sprite_controller",
+           "context"]

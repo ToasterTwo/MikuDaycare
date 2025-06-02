@@ -1,24 +1,28 @@
 from rendering import window
-from logic import scene
 import pygame
 import test_scene as ts
+from logic import context
 
 class Game:
 
     def __init__(self):
         self._window = window.Window((600, 500), "MikuCare")
-        self._logic = ts.make()
+        context.set_current_scene(ts.make())
         self._running = False
 
     def run(self):
-        self._logic.init()
+        if context.current_scene is None:
+            print("set a scene dumbass")
+            return
+        
+        context.current_scene.init()
         self._running = True
         clock = pygame.time.Clock()
         while(self._running):
             delta_time = clock.tick()/1000
             inputs = self._window.get_inputs()
             self.do_tick(inputs)
-            self._logic.update(delta_time)
+            context.current_scene.update(delta_time)
             self.render()
         self.exit()
 
@@ -27,12 +31,13 @@ class Game:
             if event.type == pygame.QUIT:
                 self._running = False
             else:
-                self._logic.on_event(event)
+                if context.current_scene is not None:
+                    context.current_scene.on_event(event)
             
     def render(self):
-        res = self._logic.get_resources()
-        # print(res)
-        self._window.render(res)
+        if context.current_scene is not None:
+            res = context.current_scene.get_resources()
+            self._window.render(res)
 
     def exit(self):
         self._window.quit()

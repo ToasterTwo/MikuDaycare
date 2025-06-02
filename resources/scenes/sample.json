@@ -67,7 +67,7 @@
                 "kwargs":{
                     "path":"resources\\images\\spritesheet.png", 
                     "texture_rect":[50,0,110,105], 
-                    "layer":2}
+                    "layer":3}
             },
             {
                 "Name": "hair_transform",
@@ -87,7 +87,7 @@
                 "kwargs":{
                     "path":"resources\\images\\spritesheet.png", 
                     "texture_rect":[50,105,30,15], 
-                    "layer":1}
+                    "layer":2}
             },
             {
                 "Name": "eyes_transform",
@@ -107,7 +107,7 @@
                 "kwargs":{
                     "path":"resources\\images\\spritesheet.png", 
                     "texture_rect":[50,120,15,7], 
-                    "layer":1}
+                    "layer":2}
             },
             {
                 "Name": "mouth_transform",
@@ -124,7 +124,7 @@
             {
                 "Name":"mouth_script",
                 "Type":"MouthScript",
-                "args":["miku_mouth.mouth_sprite", [6, 1], [50, 120]],
+                "args":["miku_mouth.mouth_sprite", [6, 1], [50, 120], "food_clone.food_hitbox"],
                 "kwargs":{}
             }
         ]
@@ -139,7 +139,7 @@
                 "kwargs":{
                     "path":"resources\\images\\spritesheet.png", 
                     "texture_rect":[160,0,24,43], 
-                    "layer":1}
+                    "layer":2}
             },
             {
                 "Name": "left_arm_transform",
@@ -159,10 +159,10 @@
                 "kwargs":{
                     "path":"resources\\images\\spritesheet.png",
                     "texture_rect":[160,43,24,43], 
-                    "layer":1}
+                    "layer":2}
             },
             {
-                "Name": "body_transform",
+                "Name": "right_arm_transform",
                 "Type": "Transform",
                 "args":[[-20, 10], 0],
                 "kwargs":{}
@@ -188,6 +188,46 @@
                 "Name":"cursor_script",
                 "Type":"CursorScript",
                 "args":["cursor_follower.cursor_transform", "cursor_follower.cursor_hitbox", 500],
+                "kwargs":{}
+            }
+        ]
+    },
+    "food_clone": {
+        "Parent":"None",
+        "active": -1,
+        "Components":[
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[-20,-20],0],
+                "kwargs": {}
+            },
+            {
+                "Name": "food_sprite",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [0, 145, 20, 20],
+                    "layer": 5
+                }
+            },
+            {
+                "Name":"sprite_controller",
+                "Type":"SpriteController",
+                "args":["food_clone.food_sprite", [3, 1], [0, 145]],
+                "kwargs":{}
+            },
+            {
+                "Name":"script",
+                "Type":"FoodCloneScript",
+                "args":["food_clone.food_sprite", "cursor_follower.cursor_transform"],
+                "kwargs":{}
+            },
+            {
+                "Name":"food_hitbox",
+                "Type":"Hitbox",
+                "args":[-10,-10,20,20],
                 "kwargs":{}
             }
         ]
@@ -220,7 +260,7 @@
             {
                 "Name":"food_controller",
                 "Type":"FoodScript",
-                "args":["food.sprite_controller", "food.food_hitbox", "food.food_sprite"],
+                "args":["food.sprite_controller", "food.food_hitbox", "food.food_sprite", "food_clone"],
                 "kwargs":{}
             },
             {

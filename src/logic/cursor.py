@@ -25,6 +25,15 @@ class CursorScript(gc.Script):
             
 
     def on_event(self, _event: pygame.event.Event)->None:
-        if _event.type == pygame.MOUSEMOTION:
-            self._transform._x = _event.pos[0]
-            self._transform._y = self._window_height-_event.pos[1]
+        match _event.type:
+            case pygame.MOUSEMOTION:
+                self._transform._x = _event.pos[0]
+                self._transform._y = self._window_height-_event.pos[1]
+        
+            case pygame.MOUSEBUTTONDOWN:
+                for hov in self._hovering:
+                    hov._parent.message("mouse", _event.button, True)
+            
+            case pygame.MOUSEBUTTONUP:
+                for hov in self._hovering:
+                    hov._parent.message("mouse", _event.button, False)

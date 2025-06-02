@@ -16,6 +16,11 @@ class Component:
     def set_parent(self, new_parent: Any):
         self._parent = new_parent
 
+    def is_active(self)->bool:
+        if self._parent is None:
+            return self._active
+        return self._active and self._parent.is_active()
+    
     @staticmethod
     def from_name(name: str, parent, *args, **kwargs):
         return Component.NAME_MAP[name](parent, *args, **kwargs)
@@ -30,9 +35,15 @@ class GameObject(Component):
     def get_components(self, _type: type | None = None, inheritance:bool = False) -> list:
         if _type is None:
             return self._components
-        ret = [c for c in self._components if not inheritance and type(c)==_type or inheritance and issubclass(type(c), Script)]
+        ret = [c for c in self._components if not inheritance and type(c)==_type or inheritance and issubclass(type(c), _type)]
         return ret
     
+    def get_component(self, _type: type,  inheritance:bool = False) -> Component | None:
+        for comp in self._components:
+            if type(comp) == _type or inheritance and issubclass(type(comp), _type):
+                return comp
+        return None
+
     def init(self):
         for script in self.get_components(Script, True):
             script.init()
@@ -196,8 +207,12 @@ class Hitbox(Component):
             box._colliding.clear()
         for i in range(len(Hitbox.ALL_BOXES)):
             box: Hitbox= Hitbox.ALL_BOXES[i]
+            if not box.is_active():
+                continue
             for j in range(i+1, len(Hitbox.ALL_BOXES)):
                 other:Hitbox = Hitbox.ALL_BOXES[j]
+                if not other.is_active():
+                    continue
                 if box.collides(other):
                     box._colliding.append(other)
                     other._colliding.append(box)

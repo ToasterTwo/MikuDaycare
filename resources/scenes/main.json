@@ -1,0 +1,625 @@
+{
+    "bars": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name": "comp_name",
+                "Type": "Transform",
+                "args": [[200, 530], 0, [1,1]],
+                "kwargs": {}
+            }
+        ],
+        "Tags":[]
+    },
+    "happy_bar":{
+        "Parent":"bars",
+        "Components":[
+            {
+                "Name": "bar_script",
+                "Type": "ProgressBar",
+                "args": [100, 100, "happy_bar.bar_shape", "VERTICAL", "BOTTOMRIGHT"],
+                "kwargs": {
+                            "color_map":[
+                                [20, [255, 0, 0]],
+                                [60, [255, 255, 0]],
+                                [100, [0, 255, 255]]
+                            ]
+                        }
+            },
+            {
+                "Name": "bar_shape",
+                "Type": "Rectangle",
+                "args": [],
+                "kwargs": {"dimensions":[26, 28], 
+                            "color":[0, 255, 255], 
+                            "position":[0,-1], 
+                            "layer":0}
+            },
+            {
+                "Name": "icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [30, 165, 30, 30],
+                    "layer": 1
+                }
+            },
+            {
+                "Name": "bar_transform",
+                "Type": "Transform",
+                "args": [[-115, 0], 0, [2, 2]],
+                "kwargs": {}
+            }
+        ]
+    },
+     "hungry_bar":{
+        "Parent":"bars",
+        "Components":[
+            {
+                "Name": "bar_script",
+                "Type": "ProgressBar",
+                "args": [100, 50, "hungry_bar.bar_shape", "VERTICAL", "BOTTOMRIGHT"],
+                "kwargs": {
+                            "color_map":[
+                                [20, [255, 0, 0]],
+                                [60, [255, 255, 0]],
+                                [100, [0, 255, 255]]
+                            ]
+                        }
+            },
+            {
+                "Name": "bar_shape",
+                "Type": "Rectangle",
+                "args": [],
+                "kwargs": {
+                            "dimensions":[26, 28], 
+                            "color":[0, 255, 255], 
+                            "position":[0,-1], 
+                            "layer":0}
+            },
+            {
+                "Name": "icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [0, 165, 30, 30],
+                    "layer": 1
+                }
+            },
+            {
+                "Name": "bar_transform",
+                "Type": "Transform",
+                "args": [[0, 0], 0, [2, 2]],
+                "kwargs": {}
+            }
+        ]
+    },
+     "energy_bar":{
+        "Parent":"bars",
+        "Components":[
+            {
+                "Name": "bar_script",
+                "Type": "ProgressBar",
+                "args": [100, 50, "energy_bar.bar_shape", "VERTICAL", "BOTTOMRIGHT"],
+                "kwargs": {
+                            "color_map":[
+                                [20, [255, 0, 0]],
+                                [60, [255, 255, 0]],
+                                [100, [0, 255, 255]]
+                            ]
+                        }
+            },
+            {
+                "Name": "bar_shape",
+                "Type": "Rectangle",
+                "args": [],
+                "kwargs": {
+                            "dimensions":[26, 28], 
+                            "color":[0, 255, 255], 
+                            "position":[0,-1], 
+                            "layer":0}
+            },
+            {
+                "Name": "icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [60, 165, 30, 30],
+                    "layer": 1
+                }
+            },
+            {
+                "Name": "bar_transform",
+                "Type": "Transform",
+                "args": [[115, 0], 0, [2, 2]],
+                "kwargs": {}
+            }
+        ]
+    },
+    "miku":{
+        "Parent":"None",
+        "Components":[
+            {
+                "Name":"miku_transform",
+                "Type": "Transform",
+                "args": [[200, 300], 0],
+                "kwargs": {"scale":[2, 2]}
+            },
+            {
+                "Name":"miku_script",
+                "Type": "CreatureBehaviour",
+                "args": ["happy_bar", "hungry_bar", "energy_bar"],
+                "kwargs": {}
+            }
+        ]
+    },
+    "miku_body":{
+        "Parent":"miku",
+        "Components":[
+            {
+                "Name":"body_sprite",
+                "Type":"Image",
+                "args":[],
+                "kwargs":{"path":"resources\\images\\spritesheet.png", "texture_rect":[0,0,50,145], "layer":0}
+            },
+            {
+                "Name": "body_transform",
+                "Type": "Transform",
+                "args":[[0,0], 0],
+                "kwargs":{}
+            }
+        ]
+    },
+    "miku_hair":{
+        "Parent":"miku",
+        "Components":[
+            {
+                "Name":"hair_sprite",
+                "Type":"Image",
+                "args":[],
+                "kwargs":{
+                    "path":"resources\\images\\spritesheet.png", 
+                    "texture_rect":[50,0,110,105], 
+                    "layer":3}
+            },
+            {
+                "Name": "hair_transform",
+                "Type": "Transform",
+                "args":[[-5, 27], 0],
+                "kwargs":{}
+            },
+            {
+                "Name":"petting_area",
+                "Type":"Hitbox",
+                "args":[100, -25, 30, 60],
+                "kwargs":{}
+            }
+        ],
+        "Tags":["pettable"]
+    },
+    "miku_eyes":{
+        "Parent":"miku",
+        "Components":[
+            {
+                "Name":"eyes_sprite",
+                "Type":"Image",
+                "args":[],
+                "kwargs":{
+                    "path":"resources\\images\\spritesheet.png", 
+                    "texture_rect":[50,105,30,15], 
+                    "layer":2}
+            },
+            {
+                "Name": "eyes_transform",
+                "Type": "Transform",
+                "args":[[0, 50], 0],
+                "kwargs":{}
+            }
+        ]
+    },
+    "miku_mouth":{
+        "Parent":"miku",
+        "Components":[
+            {
+                "Name":"mouth_sprite",
+                "Type":"Image",
+                "args":[],
+                "kwargs":{
+                    "path":"resources\\images\\spritesheet.png", 
+                    "texture_rect":[50,120,15,7], 
+                    "layer":2}
+            },
+            {
+                "Name": "mouth_transform",
+                "Type": "Transform",
+                "args":[[0, 40], 0],
+                "kwargs":{}
+            },
+            {
+                "Name":"mouth_hitbox",
+                "Type":"Hitbox",
+                "args":[7, -15, 14, 30],
+                "kwargs":{}
+            },
+            {
+                "Name":"mouth_script",
+                "Type":"MouthScript",
+                "args":["miku_mouth.mouth_sprite", [6, 1], [50, 120], "food_clone.food_hitbox"],
+                "kwargs":{}
+            }
+        ]
+    },
+    "miku_left_arm":{
+        "Parent":"miku",
+        "Components":[
+            {
+                "Name":"left_arm_sprite",
+                "Type":"Image",
+                "args":[],
+                "kwargs":{
+                    "path":"resources\\images\\spritesheet.png", 
+                    "texture_rect":[160,0,24,43], 
+                    "layer":-1}
+            },
+            {
+                "Name": "left_arm_transform",
+                "Type": "Transform",
+                "args":[[18, 10], 0],
+                "kwargs":{}
+            }
+        ]
+    },
+    "miku_right_arm":{
+        "Parent":"miku",
+        "Components":[
+            {
+                "Name":"right_arm_sprite",
+                "Type":"Image",
+                "args":[],
+                "kwargs":{
+                    "path":"resources\\images\\spritesheet.png",
+                    "texture_rect":[160,43,24,43], 
+                    "layer":-1}
+            },
+            {
+                "Name": "right_arm_transform",
+                "Type": "Transform",
+                "args":[[-20, 10], 0],
+                "kwargs":{}
+            }
+        ]
+    },
+    "cursor_follower": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name": "cursor_transform",
+                "Type": "Transform",
+                "args": [[0,0], 0],
+                "kwargs": {}
+            },
+            {
+                "Name": "cursor_sprite",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [30, 255, 25, 25],
+                    "layer": 10
+                }
+            },
+            {
+                "Name":"cursor_hitbox",
+                "Type":"Hitbox",
+                "args":[8, -8, 8, 8],
+                "kwargs":{}
+            },
+            {
+                "Name":"cursor_script",
+                "Type":"CursorScript",
+                "args":["cursor_follower.cursor_transform", "cursor_follower.cursor_hitbox", 600],
+                "kwargs":{}
+            },
+            {
+                "Name":"sprite_controller",
+                "Type":"SpriteController",
+                "args":["cursor_follower.cursor_sprite", [5, 1], [30, 255]],
+                "kwargs":{}
+            }
+        ]
+    },
+    "food_clone": {
+        "Parent":"None",
+        "active": -1,
+        "Components":[
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[-20,-20],0, [2, 2]],
+                "kwargs": {}
+            },
+            {
+                "Name": "food_sprite",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [0, 145, 20, 20],
+                    "layer": 5
+                }
+            },
+            {
+                "Name":"sprite_controller",
+                "Type":"SpriteController",
+                "args":["food_clone.food_sprite", [3, 1], [0, 145]],
+                "kwargs":{}
+            },
+            {
+                "Name":"script",
+                "Type":"FoodCloneScript",
+                "args":["food_clone.sprite_controller", "cursor_follower.cursor_transform", "miku_mouth"],
+                "kwargs":{}
+            },
+            {
+                "Name":"food_hitbox",
+                "Type":"Hitbox",
+                "args":[15,-15,30,30],
+                "kwargs":{}
+            }
+        ]
+    },
+    "UI_bar": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name":"square",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 255, 30, 30], [3, 3, 10, 10], [38, 10]],
+                "kwargs":{"layer":0}
+            },
+            {
+                "Name": "ui_transform",
+                "Type": "Transform",
+                "args": [[200,55], 0],
+                "kwargs": {}
+            }
+        ],
+        "Tags":[]
+    },
+    "shop_button": {
+        "Parent":"UI_bar",
+        "Components":[
+            {
+                "Name": "shop_icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [150, 195, 30, 30],
+                    "layer": 1
+                }
+            },
+            {
+                "Name": "shop_position",
+                "Type": "Transform",
+                "args": [[-130,0], 0, [2, 2]],
+                "kwargs": {}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[20, -20, 40, 40],
+                "kwargs":{}
+            }
+        ],
+        "Tags":["clickable"]
+    },
+    "prev_food": {
+        "Parent":"UI_bar",
+        "Components":[
+            {
+                "Name": "arrow_icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [60, 195, 30, 30],
+                    "layer": 1
+                }
+            },
+            {
+                "Name": "arrow_position",
+                "Type": "Transform",
+                "args": [[-50,0], 180, [1.5, 1.5]],
+                "kwargs": {}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[20, -15, 40, 30],
+                "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["prev", "food"],
+                "kwargs":{}
+            }
+        ],
+        "Tags":["clickable"]
+    },
+     "next_food": {
+        "Parent":"UI_bar",
+        "Components":[
+            {
+                "Name": "arrow_icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [60, 195, 30, 30],
+                    "layer": 1
+                }
+            },
+            {
+                "Name": "arrow_position",
+                "Type": "Transform",
+                "args": [[50,0], 0, [1.5, 1.5]],
+                "kwargs": {}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[20, -15, 40, 30],
+                "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["next", "food"],
+                "kwargs":{}
+            }
+        ],
+        "Tags":["clickable"]
+    },
+    "food": {
+        "Parent":"UI_bar",
+        "Components":[
+            {
+                "Name": "food_transform",
+                "Type": "Transform",
+                "args": [[0,0], 0, [2, 2]],
+                "kwargs": {}
+            },
+            {
+                "Name":"food_bg",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 225, 30, 30], [3, 3, 10, 10], [5, 5]],
+                "kwargs":{"scale":[0.5, 0.5],"layer":1}
+            },
+            {
+                "Name": "food_sprite",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [0, 145, 20, 20],
+                    "layer": 2
+                }
+            },
+            {
+                "Name":"food_hitbox",
+                "Type":"Hitbox",
+                "args":[20,-20,40,40],
+                "kwargs":{}
+            },
+            {
+                "Name":"food_controller",
+                "Type":"FoodScript",
+                "args":["food.sprite_controller", "food.food_hitbox", "food.food_sprite", "food_clone"],
+                "kwargs":{}
+            },
+            {
+                "Name":"sprite_controller",
+                "Type":"SpriteController",
+                "args":["food.food_sprite", [3, 1], [0, 145]],
+                "kwargs":{}
+            }
+        ],
+        "Tags":["grabbable"]
+    },
+    "games_button": {
+        "Parent":"UI_bar",
+        "Components":[
+            {
+                "Name": "games_icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [90, 195, 30, 30],
+                    "layer": 1
+                }
+            },
+            {
+                "Name": "games_position",
+                "Type": "Transform",
+                "args": [[130,0], 0, [2, 2]],
+                "kwargs": {}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[20, -20, 40, 40],
+                "kwargs":{}
+            }
+        ],
+        "Tags":["clickable"]
+    },
+    "pause_button": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name": "pause_icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [120, 195, 30, 30],
+                    "layer": 1
+                }
+            },
+            {
+                "Name": "pause_position",
+                "Type": "Transform",
+                "args": [[375,575], 0, [1, 1]],
+                "kwargs": {}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[15, -15, 30, 30],
+                "kwargs":{}
+            }
+        ],
+        "Tags":["clickable"]
+    },
+    "coin_display": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[55,135], 0],
+                "kwargs": {}
+            },
+            {
+                "Name": "coin_icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [30, 225, 30, 30],
+                    "layer": 2,
+                    "position":[-30, 0]
+                }
+            },
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 195, 30, 30], [3, 3, 10, 10], [9, 5]],
+                "kwargs":{}
+            },
+            {
+                "Name":"count_text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"000", "font_size":20, "position":[15,0], "layer":2}
+            }
+        ],
+        "Tags":[]
+    }
+}

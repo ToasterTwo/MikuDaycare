@@ -12,6 +12,7 @@ class Window:
 
         self._window = pygame.display.set_mode(size)
         pygame.display.set_caption(title)
+        pygame.mouse.set_visible(False)
 
     def quit(self):
         pygame.display.quit()
@@ -53,6 +54,28 @@ class Window:
                     shape_surf = pygame.transform.rotate(shape_surf, obj.global_position[2])
                     pygame.draw.rect(shape_surf, obj.color, shape_surf.get_rect())
                     self._window.blit(shape_surf, shape)
+                
+                case lr.ResourceType.TILES:
+                    image = manager.get_tile_box(
+                        obj.id, obj.source, 
+                        pygame.rect.Rect(*obj.rect), obj.grid, obj.shape)
+                    
+                    image = manager.transform(image, obj.scale, obj.global_position[2])
+                    pos = obj.global_position[:2]
+                    pos = (pos[0]-image.get_rect().width/2, 
+                           self._window.get_height()-pos[1]-image.get_rect().height/2)
+
+                    self._window.blit(image, pos, image.get_rect())
+
+                case lr.ResourceType.TEXT:
+                    image = manager.render_text(obj.text, obj.color, obj.font, obj.size)
+                    image = manager.transform(image, obj.scale, obj.global_position[2])
+                    pos = obj.global_position[:2]
+                    pos = (pos[0]-image.get_rect().width/2, 
+                           self._window.get_height()-pos[1]-image.get_rect().height/2)
+
+                    self._window.blit(image, pos, image.get_rect())
+
 
         pygame.display.flip()
 

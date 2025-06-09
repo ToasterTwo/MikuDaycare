@@ -13,11 +13,25 @@ class BarAligngment(Enum):
 
 
 class ProgressBar(Script):
-    def __init__(self, parent: GameObject |None, max_value: int, start_value: int, bar_image: Rectangle, mode: BarMode | str = BarMode.VERTICAL, alignment = BarAligngment.CENTER):
+    def __init__(self, parent: GameObject |None, 
+                 max_value: int, start_value: int, 
+                 bar_image: Rectangle, 
+                 mode: BarMode | str = BarMode.VERTICAL, 
+                 alignment = BarAligngment.CENTER,
+                 color_map: list[tuple[int, tuple[int, ...]]] = []):
         Script.__init__(self, parent)
         self._max_value = max_value
-        self.value = start_value
+        self._value = start_value
         self._image: Rectangle = bar_image
+        self._color_map = color_map
+        self._color_map.sort(key=lambda x: x[0])
+        has_max = False
+        for col in self._color_map:
+            if col[0] == 100:
+                has_max = True
+                break
+        if not has_max:
+            self._color_map.append((100, self._image._color))
 
         if type(mode) == str:
             mode = BarMode.__dict__[mode]
@@ -30,8 +44,8 @@ class ProgressBar(Script):
     def set_value(self, new_value):
         if new_value<0:
             return
-        self.value = new_value
-        scale = self.value/self._max_value
+        self._value = new_value
+        scale = self._value/self._max_value
         width, height = self._image._dimensions
         old_scale_x = self._image._scale_x
         old_scale_y = self._image._scale_y
@@ -44,16 +58,18 @@ class ProgressBar(Script):
         
         scale_x = self._image._scale_x
         scale_y = self._image._scale_y
-        img_x, img_y = self._image.get_global()[:2]
         match self._alignment:
             case BarAligngment.TOPLEFT:
-                dx = width*(scale_x-old_scale_x)/2
-                dy = height*(scale_y-old_scale_y)/2
-                self._image.move(dx, dy)
-
-            case BarAligngment.BOTTOMRIGHT:
                 dx = -width*(scale_x-old_scale_x)/2
                 dy = -height*(scale_y-old_scale_y)/2
                 self._image.move(dx, dy)
 
-            
+            case BarAligngment.BOTTOMRIGHT:
+                dx = +width*(scale_x-old_scale_x)/2
+                dy = +height*(scale_y-old_scale_y)/2
+                self._image.move(dx, dy)
+
+        for col in self._color_map:
+            if scale*100 <= col[0]:
+                self._image._color = col[1]
+                break

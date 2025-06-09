@@ -1,6 +1,7 @@
 from pygame import event, time
 from typing import Any
 import math
+from logic.logic_resource import LogicResource, ResourceType
 
 class Component:
     NAME_MAP:dict[str, type] = {}
@@ -26,11 +27,14 @@ class Component:
         return Component.NAME_MAP[name](parent, *args, **kwargs)
 
 class GameObject(Component):
-    def __init__(self, parent : Component | None= None, *components:Component):
+    def __init__(self, parent : Component | None= None, *components:Component, tags:list[str] = []):
         Component.__init__(self, parent)
         self._components = list(components)
+
         for comp in self._components:
             comp.set_parent(self)
+        
+        self._tags:set[str] = set(tags)
     
     def get_components(self, _type: type | None = None, inheritance:bool = False) -> list:
         if _type is None:
@@ -44,28 +48,38 @@ class GameObject(Component):
                 return comp
         return None
 
-    def init(self):
+    def init(self) -> None:
         for script in self.get_components(Script, True):
             script.init()
 
-    def update(self, delta_time):
+    def update(self, delta_time) -> None:
         for script in self.get_components(Script, True):
             script.update(delta_time)
     
-    def on_event(self, event):
+    def on_event(self, event) -> None:
         for script in self.get_components(Script, True):
             script.on_event(event)
 
     
-    def message(self, message: str, *args):
+    def message(self, message: str, *args) -> None:
         for script in self.get_components(Script, True):
             if message in type(script).__dict__:
                  type(script).__dict__[message](script, *args)
     
-    def add_components(self, *components: Component):
+    def add_components(self, *components: Component) -> None:
         for comp in components:
             comp.set_parent(self)
             self._components.append(comp)
+    
+    def has_tag(self, tag: str) -> bool:
+        return tag in self._tags
+
+    def add_tag(self, tag: str) -> None:
+        self._tags.add(tag)
+    
+    def remove_tag(self, tag:str)->None:
+        self._tags.remove(tag)
+
     
 
 class Script(Component):
@@ -91,10 +105,12 @@ class Transform(Component):
         self._scale_x, self._scale_y = scale
         self._angle = angle
 
-    def get_global(self):
+    def get_global(self) -> tuple[float, float, float, float, float]:
         root = self._parent
         global_x = self._x
         global_y = self._y
+        global_scale_x = self._scale_x
+        global_scale_y = self._scale_y
         global_angle = self._angle
         while root != None:
             m_transform:list[Transform] = root.get_components(Transform)
@@ -108,13 +124,16 @@ class Transform(Component):
                 root_tilt = parent_transform._angle * math.pi /180
                 root_space_x = global_x*math.cos(root_tilt)-global_y*math.sin(root_tilt)
                 root_space_y = global_x*math.sin(root_tilt)+global_y*math.cos(root_tilt)
-                global_x = parent_transform._x+root_space_x
-                global_y = parent_transform._y+root_space_y
+                global_x = parent_transform._x+root_space_x*parent_transform._scale_x
+                global_y = parent_transform._y+root_space_y*parent_transform._scale_y
                 global_angle+=parent_transform._angle
+
+                global_scale_x*=parent_transform._scale_x
+                global_scale_y*=parent_transform._scale_y
             
             root = root._parent
         
-        return global_x, global_y, global_angle
+        return global_x, global_y, global_angle, global_scale_x, global_scale_y
     
     def move(self, dx:float = 0, dy:float = 0):
         self._x+=dx
@@ -137,12 +156,15 @@ class Renderable(Transform):
                  layer: int = 0):
         Transform.__init__(self, parent, position, angle, scale)
         self._layer = layer
+    
+    def get_resource(self) -> LogicResource:
+        raise NotImplementedError("Base renderable has no resource to render")
 
 class Rectangle(Renderable):
     def __init__(self, 
                  parent: GameObject | None= None, 
                  dimensions: tuple[float, float] = (100, 100), 
-                 color: tuple[int, int, int] = (0xFF, 0xFF, 0xFF), 
+                 color: tuple[int, ...] = (0xFF, 0xFF, 0xFF, 0xFF), 
                  position: list[float]= [0.,0.], 
                  angle: float = 0, 
                  layer:int = 0):
@@ -152,6 +174,17 @@ class Rectangle(Renderable):
     
     def reshape(self, dimensions:tuple[float, float]):
         self._dimensions = dimensions
+
+    def get_resource(self) -> LogicResource:
+        global_position = self.get_global();
+        return LogicResource(
+            ResourceType.SHAPE, 
+            dimensions = self._dimensions,
+            scale = global_position[3:],
+            color = self._color,
+            global_position = global_position[:3],
+            layer = self._layer)
+    
 
 
 class Image(Renderable):
@@ -167,7 +200,19 @@ class Image(Renderable):
         Renderable.__init__(self, parent, position, angle, scale, layer)
         self._path = path
         self._texture_rect = texture_rect
+    
+    def get_resource(self) -> LogicResource:
+        global_position = self.get_global()
+        return LogicResource(
+            ResourceType.IMAGE, 
+            path = self._path,
+            scale = global_position[3:],
+            global_position = global_position[:3], 
+            layer = self._layer,
+            rect = self._texture_rect)
+    
 
+    
 class Hitbox(Component):
     ALL_BOXES = []
     def __init__(self, 
@@ -179,7 +224,7 @@ class Hitbox(Component):
         Component.__init__(self, parent)
         self._top = top
         self._left = left
-        self._bottom = top+height
+        self._bottom = top-height
         self._right = left+width
         self._colliding  = []
         if not self in Hitbox.ALL_BOXES:
@@ -220,18 +265,51 @@ class Hitbox(Component):
     def set_bounds(self, top: float, left: float, height: float, width: float) -> None:
         self._top = top
         self._left = left
-        self._right = top+height
+        self._right = top-height
         self._bottom = left+width
 
     def collides(self, other) -> bool:
         me = self.get_global_bounds()
         them = other.get_global_bounds()
 
-        x : bool = not (me[1]>them[3] or them[1]>me[3])
-        y : bool = not (me[0]>them[2] or them[0]>me[2])
+        
+        x : bool = not (me[1]>them[3] or them[1]>me[3]) #my left past their right or their left past my right
+        y : bool = not (me[0]<them[2] or them[0]<me[2]) #my top under their bottom or their top under my bottom
 
         return x and y
 
 
     def get_colliding(self) -> list[Component]:        
         return self._colliding
+
+
+class Text(Renderable):
+    default_font = "resources\\fonts\\04B_30__.TTF"
+    def __init__(self, parent:GameObject,                  
+                 scale:list[float] = [1., 1.], 
+                 position: list[float] = [0, 0], 
+                 angle: float = 0, 
+                 layer: int = 0,
+                 text: str = "",
+                 font: str = "",
+                 font_size:int = 12,
+                 color: tuple[int, ...] = (0, 0, 0)):
+        Renderable.__init__(self, parent, position, angle, scale, layer)
+
+        self._text = text
+        self._font = font
+        self._color = color
+        self._font_size = font_size
+        if self._font == "":
+            self._font = Text.default_font
+    
+    def get_resource(self) -> LogicResource:
+        position = self.get_global()
+        return LogicResource(ResourceType.TEXT,
+                             global_position = position[:3],
+                             scale = position[3:],
+                             layer = self._layer,
+                             text = self._text,
+                             font = self._font,
+                             color = self._color,
+                             size = self._font_size)

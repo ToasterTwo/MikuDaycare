@@ -6,4 +6,6 @@ __all__ = ["creature",
            "progress_bar",
            "scene",
            "sprite_controller",
-           "context"]
+           "context",
+           "tilesets",
+           "buttons"]

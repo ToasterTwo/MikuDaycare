@@ -32,11 +32,8 @@ class Scene:
             if not obj._active:
                 continue
             for comp in filter(lambda o: o._active, obj.get_components()):
-                if type(comp) == Image:
-                    resources.append(LogicResource.of_image(comp))
-                
-                elif type(comp) == Rectangle:
-                    resources.append(LogicResource.of_shape(comp))
+                if isinstance(comp, Renderable):
+                    resources.append(comp.get_resource())
                 
                 elif type(comp) == Hitbox:
                     global_bounds = comp.get_global_bounds()
@@ -44,7 +41,7 @@ class Scene:
                     gy = (global_bounds[0]+global_bounds[2])/2
                     resources.append(LogicResource(
                         ResourceType.SHAPE, 
-                        dimensions = [global_bounds[3]-global_bounds[1], global_bounds[2]-global_bounds[0]],
+                        dimensions = [global_bounds[3]-global_bounds[1], global_bounds[0]-global_bounds[2]],
                         scale = [1, 1],
                         color = [0x00, 0xff, 0x00, 0x0f],
                         global_position = [gx, gy, 0],
@@ -52,6 +49,8 @@ class Scene:
                         ))
 
         return tuple(resources)
+
+
 
 
 def from_json(filepath:str):
@@ -66,10 +65,14 @@ def from_json(filepath:str):
         parent: GameObject | None = None
         if parent_name in object_dict:
             parent = object_dict[parent_name]
+        tags = []
+        if "Tags" in parsed[o]:
+            tags = parsed[o]["Tags"]
         
-        object_dict[o] = GameObject(parent = parent)
+        object_dict[o] = GameObject(parent = parent, tags=tags)
         if "active" in parsed[o]:
             object_dict[o]._active = parsed[o]["active"] > 0
+        
         objects.append(object_dict[o])
     
     incomplete = []

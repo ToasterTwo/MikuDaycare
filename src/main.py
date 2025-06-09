@@ -6,14 +6,13 @@ from logic import context
 class Game:
 
     def __init__(self):
-        self._window = window.Window((600, 500), "MikuCare")
+        self._window = window.Window((400, 600), "MikuCare")
         context.set_current_scene(ts.make())
         self._running = False
 
     def run(self):
         if context.current_scene is None:
-            print("set a scene dumbass")
-            return
+            raise Exception("Set a scene dumbass :P")
         
         context.current_scene.init()
         self._running = True

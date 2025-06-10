@@ -6,18 +6,20 @@ from logic import context
 class Game:
 
     def __init__(self):
-        self._window = window.Window((400, 600), "MikuCare")
-        context.set_current_scene(ts.make())
+        self._window = window.Window((400, 600), "Miku Petting Sim")
         self._running = False
 
     def run(self):
-        if context.current_scene is None:
-            raise Exception("Set a scene dumbass :P")
+        context.load_scene_set_from_directory(r"resources\scenes")
+        context.set_by_alias("main")
         
-        context.current_scene.init()
         self._running = True
         clock = pygame.time.Clock()
         while(self._running):
+            context.update()
+            if context.current_scene is None:
+                break
+
             delta_time = clock.tick()/1000
             inputs = self._window.get_inputs()
             self.do_tick(inputs)

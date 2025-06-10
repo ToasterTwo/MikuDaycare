@@ -139,6 +139,41 @@
             }
         ]
     },
+    "coin_display": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[55,135], 0],
+                "kwargs": {}
+            },
+            {
+                "Name": "coin_icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [30, 225, 30, 30],
+                    "layer": 2,
+                    "position":[-30, 0]
+                }
+            },
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 195, 30, 30], [3, 3, 10, 10], [9, 5]],
+                "kwargs":{}
+            },
+            {
+                "Name":"count_text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"000", "font_size":20, "position":[15,0], "layer":2}
+            }
+        ],
+        "Tags":[]
+    },
     "miku":{
         "Parent":"None",
         "Components":[
@@ -151,7 +186,7 @@
             {
                 "Name":"miku_script",
                 "Type": "CreatureBehaviour",
-                "args": ["happy_bar", "hungry_bar", "energy_bar"],
+                "args": ["happy_bar", "hungry_bar", "energy_bar","coin_display.count_text", "miku_eyes","miku_mouth"],
                 "kwargs": {}
             }
         ]
@@ -196,6 +231,12 @@
                 "Type":"Hitbox",
                 "args":[100, -25, 30, 60],
                 "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["pet", ["miku"]],
+                "kwargs":{}
             }
         ],
         "Tags":["pettable"]
@@ -216,6 +257,12 @@
                 "Name": "eyes_transform",
                 "Type": "Transform",
                 "args":[[0, 50], 0],
+                "kwargs":{}
+            },
+            {
+                "Name":"sprite_controller",
+                "Type":"SpriteController",
+                "args":["miku_eyes.eyes_sprite", [3, 1], [50, 105]],
                 "kwargs":{}
             }
         ]
@@ -308,7 +355,7 @@
                 "kwargs": {
                     "path": "resources\\images\\spritesheet.png",
                     "texture_rect": [30, 255, 25, 25],
-                    "layer": 10
+                    "layer": 30
                 }
             },
             {
@@ -333,7 +380,7 @@
     },
     "food_clone": {
         "Parent":"None",
-        "active": -1,
+        "Active": -1,
         "Components":[
             {
                 "Name": "transform",
@@ -413,6 +460,12 @@
                 "Type":"Hitbox",
                 "args":[20, -20, 40, 40],
                 "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["", []],
+                "kwargs":{}
             }
         ],
         "Tags":["clickable"]
@@ -445,7 +498,13 @@
             {
                 "Name":"button_script",
                 "Type":"ButtonScript",
-                "args":["prev", "food"],
+                "args":["prev", ["food"]],
+                "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["", []],
                 "kwargs":{}
             }
         ],
@@ -479,7 +538,13 @@
             {
                 "Name":"button_script",
                 "Type":"ButtonScript",
-                "args":["next", "food"],
+                "args":["next", ["food"]],
+                "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["", []],
                 "kwargs":{}
             }
         ],
@@ -555,10 +620,104 @@
                 "Type":"Hitbox",
                 "args":[20, -20, 40, 40],
                 "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["", []],
+                "kwargs":{}
             }
         ],
         "Tags":["clickable"]
     },
+    "pause_menu": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[200,300], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 225, 30, 30], [3, 3, 10, 10], [8, 10]],
+                "kwargs":{"scale":[4, 4],"layer":20},
+                "Active":0
+            },
+            {
+                "Name":"pause_text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"PAUSED", "position":[0, 170], "font_size":40, "color":[0, 0, 0], "layer":21},
+                "Active":0
+            },
+            {
+                "Name":"menu_script",
+                "Type":"MenuScript",
+                "args":[["pause"], ["unpause", "quit"], 
+                    [
+                        "pause_menu.background", 
+                        "unpause_button", 
+                        "pause_menu.pause_text",
+                        "save_button",
+                        "load_button",
+                        "quit_button"
+                    ]],
+                "kwargs":{}
+            },
+            {
+                "Name":"controller",
+                "Type":"SceneChanger",
+                "args":[{"quit":"start"}],
+                "kwargs":{}
+            }
+
+        ],
+        "Tags":[]
+    },
+    "unpause_button": {
+        "Parent":"pause_menu",
+        "Components":[
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 195, 30, 30], [3, 3, 10, 10], [9, 3]],
+                "kwargs":{"scale":[2, 2],"layer":22}
+
+            },
+            {
+                "Name":"text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"Resume", "font_size":30, "layer":23}
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[0,100], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["unpause", ["miku", "pause_menu", "food", "games_button", "next_food", "prev_food", "shop_button", "miku_hair"]],
+                "kwargs":{}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[26, -76, 52, 152], 
+                "kwargs":{}
+            }
+        ],
+        "Tags":["clickable"],
+        "Active":0
+    },
+
+    
+
     "pause_button": {
         "Parent":"None",
         "Components":[
@@ -583,43 +742,130 @@
                 "Type":"Hitbox",
                 "args":[15, -15, 30, 30],
                 "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["pause", ["miku", "pause_menu", "food", "games_button", "next_food", "prev_food", "shop_button", "miku_hair"]],
+                "kwargs":{}
             }
         ],
         "Tags":["clickable"]
     },
-    "coin_display": {
-        "Parent":"None",
+    "save_button": {
+        "Parent":"pause_menu",
         "Components":[
-            {
-                "Name": "transform",
-                "Type": "Transform",
-                "args": [[55,135], 0],
-                "kwargs": {}
-            },
-            {
-                "Name": "coin_icon",
-                "Type": "Image",
-                "args": [],
-                "kwargs": {
-                    "path": "resources\\images\\spritesheet.png",
-                    "texture_rect": [30, 225, 30, 30],
-                    "layer": 2,
-                    "position":[-30, 0]
-                }
-            },
             {
                 "Name":"background",
                 "Type":"TilesetImage",
-                "args":["resources\\images\\spritesheet.png", [0, 195, 30, 30], [3, 3, 10, 10], [9, 5]],
+                "args":["resources\\images\\spritesheet.png", [0, 195, 30, 30], [3, 3, 10, 10], [9, 3]],
+                "kwargs":{"scale":[2, 2],"layer":22}
+
+            },
+            {
+                "Name":"text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"Save", "font_size":30, "layer":23}
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[0,20], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["", []],
                 "kwargs":{}
             },
             {
-                "Name":"count_text",
-                "Type":"Text",
-                "args":[],
-                "kwargs":{"text":"000", "font_size":20, "position":[15,0], "layer":2}
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[26, -76, 52, 152], 
+                "kwargs":{}
             }
         ],
-        "Tags":[]
+        "Tags":["clickable"],
+        "Active":0
+    },
+    "load_button": {
+        "Parent":"pause_menu",
+        "Components":[
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 195, 30, 30], [3, 3, 10, 10], [9, 3]],
+                "kwargs":{"scale":[2, 2],"layer":22}
+
+            },
+            {
+                "Name":"text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"Load", "font_size":30, "layer":23}
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[0,-60], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["", []],
+                "kwargs":{}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[26, -76, 52, 152], 
+                "kwargs":{}
+            }
+        ],
+        "Tags":["clickable"],
+        "Active":0
+    },
+    "quit_button": {
+        "Parent":"pause_menu",
+        "Components":[
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 195, 30, 30], [3, 3, 10, 10], [9, 3]],
+                "kwargs":{"scale":[2, 2],"layer":22}
+
+            },
+            {
+                "Name":"text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"Quit", "font_size":30, "layer":23}
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[0,-140], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["quit", ["pause_menu"]],
+                "kwargs":{}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[26, -76, 52, 152], 
+                "kwargs":{}
+            }
+        ],
+        "Tags":["clickable"],
+        "Active":0
     }
+
+    
 }

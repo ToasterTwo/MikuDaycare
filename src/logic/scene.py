@@ -12,7 +12,7 @@ class Scene:
             self._objects.append(obj)
     
     def update(self, delta_time: float):
-        Hitbox.recalculate_collisions()
+        Hitbox.recalculate_collisions(self)
         for obj in self._objects:
             if obj._active:
                 obj.update(delta_time)
@@ -35,18 +35,18 @@ class Scene:
                 if isinstance(comp, Renderable):
                     resources.append(comp.get_resource())
                 
-                elif type(comp) == Hitbox:
-                    global_bounds = comp.get_global_bounds()
-                    gx = (global_bounds[1]+global_bounds[3])/2
-                    gy = (global_bounds[0]+global_bounds[2])/2
-                    resources.append(LogicResource(
-                        ResourceType.SHAPE, 
-                        dimensions = [global_bounds[3]-global_bounds[1], global_bounds[0]-global_bounds[2]],
-                        scale = [1, 1],
-                        color = [0x00, 0xff, 0x00, 0x0f],
-                        global_position = [gx, gy, 0],
-                        layer = 11
-                        ))
+                # elif type(comp) == Hitbox:
+                #     global_bounds = comp.get_global_bounds()
+                #     gx = (global_bounds[1]+global_bounds[3])/2
+                #     gy = (global_bounds[0]+global_bounds[2])/2
+                #     resources.append(LogicResource(
+                #         ResourceType.SHAPE, 
+                #         dimensions = [global_bounds[3]-global_bounds[1], global_bounds[0]-global_bounds[2]],
+                #         scale = [1, 1],
+                #         color = [0x00, 0xff, 0x00, 0x33],
+                #         global_position = [gx, gy, 0],
+                #         layer = 100
+                #         ))
 
         return tuple(resources)
 
@@ -54,12 +54,18 @@ class Scene:
 
 
 def from_json(filepath:str):
+    scene = Scene()
+    Hitbox.register_scene(scene)
+
     parsed = None
     with open(filepath, mode="r",encoding="UTF-8") as file:
         parsed = json.loads(file.read())
 
     object_dict: dict[str, Any] = {}
+    object_dict.clear()
     objects = []
+    objects.clear()
+
     for o in parsed:
         parent_name : str = parsed[o]["Parent"]
         parent: GameObject | None = None
@@ -70,12 +76,56 @@ def from_json(filepath:str):
             tags = parsed[o]["Tags"]
         
         object_dict[o] = GameObject(parent = parent, tags=tags)
-        if "active" in parsed[o]:
-            object_dict[o]._active = parsed[o]["active"] > 0
+        if "Active" in parsed[o]:
+            object_dict[o]._active = parsed[o]["Active"] > 0
         
         objects.append(object_dict[o])
     
+    def substitute_args(args:list[Any])->tuple[list[Any], bool]:
+        substituted = []
+        is_incomplete = False
+        for something in args:
+            if type(something) == str and something in object_dict:
+                    if object_dict[something] is None:
+                        is_incomplete = True
+                    substituted.append(object_dict[something])
+            elif type(something) == list:
+                sub_args, sub_incomplete = substitute_args(something)
+                substituted.append(sub_args)
+                is_incomplete = sub_incomplete or is_incomplete
+            elif type(something) == dict:
+                sub_kwargs, sub_incomplete = substitute_kwargs(something)
+                substituted.append(sub_kwargs)
+                is_incomplete = sub_incomplete or is_incomplete
+            else:
+                substituted.append(something)
+        
+        return substituted, is_incomplete
+    
+    def substitute_kwargs(kwargs:dict[str, Any])->tuple[dict[str, Any], bool]:
+        substituted = {}
+        is_incomplete = False
+        for something in kwargs:
+            value = kwargs[something]
+            if type(value) == str and value in object_dict:
+                    if object_dict[value] is None:
+                        is_incomplete = True
+                    substituted[something]=object_dict[value]
+            elif type(value) == list:
+                substituted[something], sub_incomplete = substitute_args(value)
+                is_incomplete = sub_incomplete or is_incomplete
+            elif type(value) == dict:
+                substituted[something], sub_incomplete = substitute_kwargs(value)
+                is_incomplete = sub_incomplete or is_incomplete
+
+            else:
+                substituted[something] = value
+        
+        return substituted, is_incomplete
+                    
+    
     incomplete = []
+    incomplete.clear()
     for o in parsed:
         for comp in parsed[o]["Components"]:
             comp["Name"] = o+"."+comp["Name"] # type: ignore
@@ -83,54 +133,30 @@ def from_json(filepath:str):
 
     for o in parsed:
         for comp in parsed[o]["Components"]:
-            args = comp["args"][:]
-            for i in range(len(args)):
-                if type(args[i]) == list:
-                    continue
-                if args[i] in object_dict:
-                    requested = object_dict[args[i]]
-                    if requested is None:
-                        incomplete.append(comp)
-                    args[i] = requested
-            
-            kwargs = comp["kwargs"].copy()
-            for a in kwargs:
-                if type(kwargs[a]) == list:
-                    continue
+            args, incomplete_args = substitute_args(comp["args"])
+            kwargs, incomplete_kwargs = substitute_kwargs(comp["kwargs"])
 
-                if kwargs[a] in object_dict:
-                    requested = object_dict[kwargs[a]]
-                    if requested is None:
-                        incomplete.append(comp)
-                    kwargs[a] = requested
+            if incomplete_args or incomplete_kwargs:
+                incomplete.append(comp)
             
             comp_obj :Component= Component.from_name(comp["Type"], object_dict[o], *args, **kwargs)
-            if "active" in comp:
-                comp_obj._active = comp["active"] > 0
+            if "Active" in comp:
+                comp_obj._active = comp["Active"] > 0
             object_dict[comp["Name"]] = comp_obj
             object_dict[o].add_components(comp_obj)
             
     
     for revisited in incomplete:
-        args = revisited["args"]
-        for i in range(len(args)):
-            if type(args[i]) == list:
-                continue
-            if args[i] in object_dict:
-                args[i] = object_dict[args[i]]
+        args, still_incopmplete_args = substitute_args(revisited["args"])
         
-        kwargs = revisited["kwargs"]
-        for a in kwargs:
-            if type(kwargs[a]) == list:
-                    continue
-            if kwargs[a] in object_dict:
-                kwargs[a] = object_dict[kwargs[a]]
+        kwargs, still_incopmplete_kwargs = substitute_kwargs(revisited["kwargs"])
 
+        if still_incopmplete_args or still_incopmplete_kwargs:
+            raise ValueError("Unable to complete an object")
         
         revisited_obj = object_dict[revisited["Name"]]
-        revisited_obj.__init__(revisited_obj._parent, *args, **kwargs)
+        Component.NAME_MAP[revisited["Type"]].__init__(revisited_obj, revisited_obj._parent, *args, **kwargs)
     
-    scene = Scene()
     scene.add_objects(*objects)
 
     return scene

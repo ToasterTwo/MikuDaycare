@@ -113,14 +113,10 @@ class Transform(Component):
         global_scale_y = self._scale_y
         global_angle = self._angle
         while root != None:
-            m_transform:list[Transform] = root.get_components(Transform)
+            parent_transform:Transform = root.get_component(Transform)
             
-            if len(m_transform)<1:
-                continue
-            
-            parent_transform = m_transform[0]
 
-            if parent_transform != self:
+            if parent_transform is not None and parent_transform != self:
                 root_tilt = parent_transform._angle * math.pi /180
                 root_space_x = global_x*math.cos(root_tilt)-global_y*math.sin(root_tilt)
                 root_space_y = global_x*math.sin(root_tilt)+global_y*math.cos(root_tilt)
@@ -214,7 +210,8 @@ class Image(Renderable):
 
     
 class Hitbox(Component):
-    ALL_BOXES = []
+    ALL_BOXES = {}
+    registering_scene:Any|None= None
     def __init__(self, 
                  parent :GameObject |None = None,
                  top: float = 0,
@@ -227,8 +224,8 @@ class Hitbox(Component):
         self._bottom = top-height
         self._right = left+width
         self._colliding  = []
-        if not self in Hitbox.ALL_BOXES:
-            Hitbox.ALL_BOXES.append(self)
+        if not self in Hitbox.ALL_BOXES[Hitbox.registering_scene]:
+            Hitbox.ALL_BOXES[Hitbox.registering_scene].append(self)
     
     def get_global_bounds(self) -> tuple[float, float, float, float]:
         master_transform = self._parent.get_components(Transform)
@@ -247,20 +244,26 @@ class Hitbox(Component):
         self._right += dx
     
     @staticmethod
-    def recalculate_collisions():
-        for box in Hitbox.ALL_BOXES:
+    def recalculate_collisions(scene):
+        boxes:list[Hitbox] = Hitbox.ALL_BOXES[scene]
+        for box in boxes:
             box._colliding.clear()
-        for i in range(len(Hitbox.ALL_BOXES)):
-            box: Hitbox= Hitbox.ALL_BOXES[i]
+        for i in range(len(boxes)):
+            box: Hitbox= boxes[i]
             if not box.is_active():
                 continue
-            for j in range(i+1, len(Hitbox.ALL_BOXES)):
-                other:Hitbox = Hitbox.ALL_BOXES[j]
+            for j in range(i+1, len(boxes)):
+                other:Hitbox = boxes[j]
                 if not other.is_active():
                     continue
                 if box.collides(other):
                     box._colliding.append(other)
                     other._colliding.append(box)
+    
+    @staticmethod
+    def register_scene(scene:Any):
+        Hitbox.registering_scene = scene
+        Hitbox.ALL_BOXES[scene] = []
     
     def set_bounds(self, top: float, left: float, height: float, width: float) -> None:
         self._top = top

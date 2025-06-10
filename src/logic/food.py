@@ -44,6 +44,12 @@ class FoodScript(gc.Script):
     def prev(self):
         self._food_now = (self._food_now-1)%len(self._foods)
         self._controller.switch_sprite(self._foods[self._food_now].sprite_id)
+    
+    def pause(self):
+        self._hitbox._active = False
+    
+    def unpause(self):
+        self._hitbox._active = True
 
 
 

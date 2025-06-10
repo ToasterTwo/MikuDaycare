@@ -1,0 +1,201 @@
+{  
+    "cursor_follower": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name": "cursor_transform",
+                "Type": "Transform",
+                "args": [[0,0], 0],
+                "kwargs": {}
+            },
+            {
+                "Name": "cursor_sprite",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [30, 255, 25, 25],
+                    "layer": 30
+                }
+            },
+            {
+                "Name":"cursor_hitbox",
+                "Type":"Hitbox",
+                "args":[8, -8, 8, 8],
+                "kwargs":{}
+            },
+            {
+                "Name":"cursor_script",
+                "Type":"CursorScript",
+                "args":["cursor_follower.cursor_transform", "cursor_follower.cursor_hitbox", 600],
+                "kwargs":{}
+            },
+            {
+                "Name":"sprite_controller",
+                "Type":"SpriteController",
+                "args":["cursor_follower.cursor_sprite", [5, 1], [30, 255]],
+                "kwargs":{}
+            }
+        ],
+        "Tags":["start_cursor"]
+    },
+ 
+    "main_menu": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name":"script",
+                "Type":"MenuScript",
+                "args":[["return_main"], [""], ["start_button", "load_buton", "quit_button"]],
+                "kwargs":{}
+            },
+            {
+                "Name":"controller",
+                "Type":"SceneChanger",
+                "args":[{"start":"main", ".null":".null"}],
+                "kwargs":{}
+            }
+        ],
+        "Tags":[]
+    },
+
+    "start_button": {
+        "Parent":"main_menu",
+        "Components":[
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 195, 30, 30], [3, 3, 10, 10], [9, 3]],
+                "kwargs":{"scale":[2, 2],"layer":1}
+
+            },
+            {
+                "Name":"text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"Start", "font_size":30, "layer":2}
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[200,350], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["start", ["main_menu"]],
+                "kwargs":{}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[26, -76, 52, 152], 
+                "kwargs":{}
+            }
+        ],
+        "Tags":["clickable"],
+        "Active":1
+    },
+
+    "load_button": {
+        "Parent":"main_menu",
+        "Components":[
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 195, 30, 30], [3, 3, 10, 10], [9, 3]],
+                "kwargs":{"scale":[2, 2],"layer":1}
+
+            },
+            {
+                "Name":"text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"Load", "font_size":30, "layer":1}
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[200,250], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["load", []],
+                "kwargs":{}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[26, -76, 52, 152], 
+                "kwargs":{}
+            }
+        ],
+        "Tags":["clickable"],
+        "Active":1
+    },
+
+    "quit_button": {
+        "Parent":"main_menu",
+        "Components":[
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 195, 30, 30], [3, 3, 10, 10], [9, 3]],
+                "kwargs":{"scale":[2, 2],"layer":1}
+
+            },
+            {
+                "Name":"text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"Quit", "font_size":30, "layer":1}
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[200,150], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":[".null", ["main_menu"]],
+                "kwargs":{}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[26, -76, 52, 152], 
+                "kwargs":{}
+            }
+        ],
+        "Tags":["clickable"],
+        "Active":1
+    },
+    "logo": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name": "image",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\logo.png",
+                    "texture_rect": [0, 0, -1, -1],
+                    "layer": 0
+                }
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[200,500], 0],
+                "kwargs": {}
+            }
+        ],
+        "Tags":[]
+    }
+
+}

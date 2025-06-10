@@ -8,4 +8,6 @@ __all__ = ["creature",
            "sprite_controller",
            "context",
            "tilesets",
-           "buttons"]
+           "buttons",
+           "menus",
+           "scene_changer"]

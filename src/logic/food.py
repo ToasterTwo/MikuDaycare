@@ -7,32 +7,41 @@ from dataclasses import dataclass
 class FoodData:
     sprite_id : int
     saturation: int
+    amount:int
+    cost:int
 
 
 
 class FoodScript(gc.Script):
-    def __init__(self, parent:gc.GameObject, sprite: SpriteController, hitbox: gc.Hitbox, image: gc.Image, clone: gc.GameObject):
+    def __init__(self, parent:gc.GameObject, sprite: SpriteController, hitbox: gc.Hitbox, image: gc.Image, clone: gc.GameObject, food_counter: gc.Text):
         gc.Script.__init__(self, parent)
         self._sprite = image
         self._hitbox = hitbox
         self._controller = sprite
         self._clone = clone
-        self._foods = [FoodData(0, 10), FoodData(1, 15), FoodData(2, 25)]
+        self._foods = [FoodData(0, 10, 10, 2), FoodData(1, 15, 10, 4), FoodData(2, 25, 1, 6)]
         self._food_now = 0
+        self._counter = food_counter
 
     def init(self):
         self._controller.switch_sprite(self._foods[self._food_now].sprite_id)
+        self._counter._text = f"{self._foods[self._food_now].amount:02}"
+    
+    def update(self, delta_time):
+        self._counter._text = f"{self._foods[self._food_now].amount:02}"
+
     
     def cursor_enter(self):
-        self._sprite.scale(1.5, 1.5)
-        self._sprite._angle = 5
+        if self._foods[self._food_now].amount>0:
+            self._sprite.scale(1.5, 1.5)
+            self._sprite._angle = 5
     
     def cursor_exit(self):
         self._sprite.scale(1, 1)
         self._sprite._angle = 0
     
     def mouse(self, button: int, down: bool):
-        if button == 1 and down and not self._clone._active:
+        if button == 1 and down and not self._clone._active and self._foods[self._food_now].amount>0:
             self._clone._active = True
             self._clone.message("pick_food", self._foods[self._food_now])
             self.cursor_exit()
@@ -45,10 +54,10 @@ class FoodScript(gc.Script):
         self._food_now = (self._food_now-1)%len(self._foods)
         self._controller.switch_sprite(self._foods[self._food_now].sprite_id)
     
-    def pause(self):
+    def menu(self):
         self._hitbox._active = False
     
-    def unpause(self):
+    def unmenu(self):
         self._hitbox._active = True
 
 
@@ -75,7 +84,7 @@ class FoodCloneScript(gc.Script):
     def mouse(self, button: int, down: bool):
         if button == 1 and not down:
             if self._hitbox.collides(self._mouth_hitbox):
-                self._mouth.message("feed", self._food.saturation)
+                self._mouth.message("feed", self._food)
 
             self._parent._active = False
         

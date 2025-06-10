@@ -1,4 +1,6 @@
 from logic.game_components import *
+from logic.creature import *
+from logic.food import *
 
 class MenuScript(Script):
     derivative_id = 0
@@ -31,3 +33,36 @@ class MenuScript(Script):
     def deactivate(self):
         for element in self._menu_elements: #type:ignore
             element._active = False 
+    
+
+class ShopScript(Script):
+    def __init__(self, parent:GameObject, miku: CreatureBehaviour, food: FoodScript, shop_display: SpriteController, price_display:Text, funds_display: Text):
+        Script.__init__(self, parent)
+        self._food = food
+        self._miku = miku
+        self._food_list = self._food._foods
+        self._display = shop_display
+        self._displayed_food = 0
+        self._price_display = price_display
+        self._funds_display = funds_display
+        
+    
+    def update(self, delta_time):
+        self._display.switch_sprite(self._displayed_food)
+        self._price_display._text = f"{self._food_list[self._displayed_food].cost}"
+        if self._food_list[self._displayed_food].cost > self._miku._coins:
+            self._funds_display._color = (255, 0, 0)
+        else:
+            self._funds_display._color = (0, 0, 0)
+        self._funds_display._text = f"{self._miku._coins:03}"
+    
+    def next(self):
+        self._displayed_food = (self._displayed_food+1)%len(self._food_list)
+    
+    def prev(self):
+        self._displayed_food = (self._displayed_food-1)%len(self._food_list)
+    
+    def buy(self):
+        if self._miku._coins >= self._food_list[self._displayed_food].cost:
+            self._food_list[self._displayed_food].amount+=1
+            self._miku._coins -= self._food_list[self._displayed_food].cost

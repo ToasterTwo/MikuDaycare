@@ -1,6 +1,8 @@
 import pygame
 from logic.game_components import *
 from logic.sprite_controller import SpriteController
+from enum import Enum
+from logic.food import FoodData
 
 
 class CreatureBehaviour(Script):
@@ -9,8 +11,8 @@ class CreatureBehaviour(Script):
                  eyes: GameObject, mouth: GameObject):
         Script.__init__(self, parent)
         self._max_value = 100
-        self._hunger = 50
-        self._happiness = 50
+        self._hunger = 10
+        self._happiness = 100
         self._energy = 100
         self._inner_clock : float = 0.
         self._happy_bar : GameObject = happy_bar
@@ -22,6 +24,8 @@ class CreatureBehaviour(Script):
         self._sprite_change_timer = 0;
         self._eyes = eyes
         self._mouth = mouth
+        self._death_counter = 0
+        self._dead = False
 
     def init(self):
         self._coins_display._text = f"{self._coins:03}"
@@ -33,18 +37,16 @@ class CreatureBehaviour(Script):
         self._eyes_sprite:SpriteController = self._eyes.get_component(SpriteController) #type:ignore
     
     def update(self, delta_time: float):
-        if not self._paused:
-            self._inner_clock+=delta_time
+        if not self._paused and not self._dead:
+            self._inner_clock-=delta_time
         
         if self._sprite_change_timer > 0:
             self._sprite_change_timer-=delta_time
 
         elif self._sprite_change_timer<0:
             self._sprite_change_timer = 0
-            self._mouth_sprite.switch_sprite(0)
-            self._eyes_sprite.switch_sprite(0)
 
-        if self._inner_clock>2:
+        if self._inner_clock<=0:
             
             if self._hunger > 0:
                 self._hunger-=2
@@ -53,32 +55,87 @@ class CreatureBehaviour(Script):
             
             if self._happiness < 0:
                 self._happiness = 0
+            
+            if self._energy<0:
+                self._energy = 0
 
             if self._hunger<30:
                 self._happiness -=5
             elif self._hunger<60:
                 self._happiness-=1
 
-            self._inner_clock = 0
+
+            self._inner_clock = 2
             self._hungry_bar.message("set_value", self._hunger)
             self._happy_bar.message("set_value", self._happiness)
+
+            if self._hunger ==0:
+                self._death_counter+=1
+            if self._happiness == 0:
+                self._death_counter+=1
+            if self._energy ==0:
+                self._death_counter+=1
+            
+            if self._hunger>0 and self._happiness>0 and self._energy>0:
+                self._death_counter = 0
+            
+            if self._death_counter >=500:
+                self._dead = True
+                self._mouth.message("die")
+        
+        self.resolve_state()
+        self._coins_display._text = f"{self._coins:03}"
+            
+
+    def feed(self, food_data: FoodData):
+        if not self._dead:
+            if self._hunger < 95:
+                self._hunger = min(self._hunger+food_data.saturation, self._max_value)
+                self._hungry_bar.message("set_value", self._hunger)
+                food_data.amount-=1
     
-    def feed(self, value):
-        self._hunger = min(self._hunger+value, self._max_value)
-        self._hungry_bar.message("set_value", self._hunger)
-    
-    def pause(self):
+    def menu(self):
         self._paused = True
     
-    def unpause(self):
+    def unmenu(self):
         self._paused = False
 
     def pet(self):
-        self._happiness =  min(self._happiness+5, self._max_value)
-        self._happy_bar.message("set_value", self._happiness)
-        self._sprite_change_timer = 1
-        self._mouth_sprite.switch_sprite(4)
-        self._eyes_sprite.switch_sprite(1)
+        if not self._dead:
+            self._happiness =  min(self._happiness+5, self._max_value)
+            self._happy_bar.message("set_value", self._happiness)
+            self._sprite_change_timer = 1
+
+    def resolve_state(self):
+        mouth_id = 0
+        eyes_id = 0
+        if self._dead:
+            mouth_id = 6
+        elif self._mouth_sprite.is_open:
+            if self._hunger <= 95:
+                mouth_id = 2
+            else:
+                mouth_id = 5
+        elif self._sprite_change_timer>0:
+            mouth_id = 4
+        elif self._happiness < 20:
+            mouth_id = 5
+        elif self._hunger < 60:
+            mouth_id = 3
+        elif self._happiness > 90:
+            mouth_id = 1
+
+        if self._dead:
+            eyes_id = 3
+        elif self._sprite_change_timer>0:
+            eyes_id = 1
+        elif self._mouth_sprite.is_open and self._hunger>=95:
+            eyes_id = 1
+        elif self._energy<20:
+            eyes_id = 2
+        
+        self._eyes_sprite.switch_sprite(eyes_id)
+        self._mouth_sprite.switch_sprite(mouth_id)
 
 
 
@@ -87,25 +144,28 @@ class MouthScript(SpriteController):
         SpriteController.__init__(self, parent, mouth_sprite, sprite_grid, origin)
         self.is_open: bool = False
         self._food_box = food_box
+        self._dead = False
     
     def init(self):
         self._hitbox: Hitbox = self._parent.get_component(Hitbox)
 
     def update(self, delta_time):
-        tmp = self._hitbox.get_colliding()
-        if self._food_box in tmp and not self.is_open:
-            self.do_open()
-        elif not self._food_box in tmp and self.is_open:
-            self.do_close()
-    
-    def feed(self, saturation: int):
-        self._parent._parent.message("feed", saturation)
+        if not self._dead:
+            tmp = self._hitbox.get_colliding()
+            if self._food_box in tmp and not self.is_open:
+                self.do_open()
+            elif not self._food_box in tmp and self.is_open:
+                self.do_close()
+
+    def feed(self, food_data: FoodData):
+        self._parent._parent.message("feed", food_data)
 
 
     def do_open(self):
-        self.switch_sprite(2)
         self.is_open = True
     
     def do_close(self):
-        self.switch_sprite(0)
         self.is_open = False
+    
+    def die(self):
+        self._dead = True

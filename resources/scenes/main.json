@@ -262,7 +262,7 @@
             {
                 "Name":"sprite_controller",
                 "Type":"SpriteController",
-                "args":["miku_eyes.eyes_sprite", [3, 1], [50, 105]],
+                "args":["miku_eyes.eyes_sprite", [5, 1], [50, 105]],
                 "kwargs":{}
             }
         ]
@@ -294,7 +294,7 @@
             {
                 "Name":"mouth_script",
                 "Type":"MouthScript",
-                "args":["miku_mouth.mouth_sprite", [6, 1], [50, 120], "food_clone.food_hitbox"],
+                "args":["miku_mouth.mouth_sprite", [8, 1], [50, 120], "food_clone.food_hitbox"],
                 "kwargs":{}
             }
         ]
@@ -464,7 +464,7 @@
             {
                 "Name":"button_script",
                 "Type":"ButtonScript",
-                "args":["", []],
+                "args":["menu", ["miku", "shop_menu", "food", "games_button", "next_food", "prev_food", "shop_button", "miku_hair", "pause_button"]],
                 "kwargs":{}
             }
         ],
@@ -499,12 +499,6 @@
                 "Name":"button_script",
                 "Type":"ButtonScript",
                 "args":["prev", ["food"]],
-                "kwargs":{}
-            },
-            {
-                "Name":"button_script",
-                "Type":"ButtonScript",
-                "args":["", []],
                 "kwargs":{}
             }
         ],
@@ -584,7 +578,7 @@
             {
                 "Name":"food_controller",
                 "Type":"FoodScript",
-                "args":["food.sprite_controller", "food.food_hitbox", "food.food_sprite", "food_clone"],
+                "args":["food.sprite_controller", "food.food_hitbox", "food.food_sprite", "food_clone", "food.count_text"],
                 "kwargs":{}
             },
             {
@@ -592,6 +586,12 @@
                 "Type":"SpriteController",
                 "args":["food.food_sprite", [3, 1], [0, 145]],
                 "kwargs":{}
+            },
+            {
+                "Name":"count_text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"Resume", "font_size":10, "layer":3, "position":[0,-18]}
             }
         ],
         "Tags":["grabbable"]
@@ -630,6 +630,25 @@
         ],
         "Tags":["clickable"]
     },
+    "menu_background": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 225, 30, 30], [3, 3, 10, 10], [8, 10]],
+                "kwargs":{"scale":[4, 4],"layer":20}
+            },
+            {
+                "Name": "transfrom",
+                "Type": "Transform",
+                "args": [[200,300], 0],
+                "kwargs": {}
+            }      
+        ],
+        "Tags":[],
+        "Active":0
+    },
     "pause_menu": {
         "Parent":"None",
         "Components":[
@@ -638,13 +657,6 @@
                 "Type": "Transform",
                 "args": [[200,300], 0],
                 "kwargs": {}
-            },
-            {
-                "Name":"background",
-                "Type":"TilesetImage",
-                "args":["resources\\images\\spritesheet.png", [0, 225, 30, 30], [3, 3, 10, 10], [8, 10]],
-                "kwargs":{"scale":[4, 4],"layer":20},
-                "Active":0
             },
             {
                 "Name":"pause_text",
@@ -656,14 +668,14 @@
             {
                 "Name":"menu_script",
                 "Type":"MenuScript",
-                "args":[["pause"], ["unpause", "quit"], 
+                "args":[["menu"], ["unpause", "quit"], 
                     [
-                        "pause_menu.background", 
                         "unpause_button", 
                         "pause_menu.pause_text",
                         "save_button",
                         "load_button",
-                        "quit_button"
+                        "quit_button",
+                        "menu_background"
                     ]],
                 "kwargs":{}
             },
@@ -702,7 +714,7 @@
             {
                 "Name":"button_script",
                 "Type":"ButtonScript",
-                "args":["unpause", ["miku", "pause_menu", "food", "games_button", "next_food", "prev_food", "shop_button", "miku_hair"]],
+                "args":["unmenu", ["miku", "pause_menu", "food", "games_button", "next_food", "prev_food", "shop_button", "miku_hair"]],
                 "kwargs":{}
             },
             {
@@ -715,9 +727,6 @@
         "Tags":["clickable"],
         "Active":0
     },
-
-    
-
     "pause_button": {
         "Parent":"None",
         "Components":[
@@ -746,7 +755,7 @@
             {
                 "Name":"button_script",
                 "Type":"ButtonScript",
-                "args":["pause", ["miku", "pause_menu", "food", "games_button", "next_food", "prev_food", "shop_button", "miku_hair"]],
+                "args":["menu", ["miku", "pause_menu", "food", "games_button", "next_food", "prev_food", "shop_button", "miku_hair"]],
                 "kwargs":{}
             }
         ],
@@ -865,7 +874,279 @@
         ],
         "Tags":["clickable"],
         "Active":0
-    }
+    },
+    "shop_menu": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[200,300], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"shop_text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"SHOP", "position":[0, 170], "font_size":40, "color":[0, 0, 0], "layer":21},
+                "Active":0
+            },
+            {
+                "Name":"menu_script",
+                "Type":"MenuScript",
+                "args":[["menu"], ["unmenu"], 
+                    [
+                        "menu_background",
+                        "shop_menu.shop_text",
+                        "shop_display",
+                        "return_arrow",
+                        "next_produce",
+                        "prev_produce",
+                        "buy_button",
+                        "funds_display"
+                    ]],
+                "kwargs":{}
+            },
+            {
+                "Name":"shop_script",
+                "Type":"ShopScript",
+                "args":["miku.miku_script", "food.food_controller", "shop_display.sprite_controller", "buy_button.price_text", "funds_display.text"],
+                "kwargs":{}
+            }
+        ],
+        "Tags":[]
+    },
+    "shop_display": {
+        "Parent":"shop_menu",
+        "Components":[
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[0,15], 0, [4, 4]],
+                "kwargs": {}
+            },
+            {
+                "Name":"food_bg",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 195, 30, 30], [3, 3, 10, 10], [5, 5]],
+                "kwargs":{"scale":[0.5, 0.5],"layer":21}
+            },
+            {
+                "Name": "food_sprite",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [0, 145, 20, 20],
+                    "layer": 22
+                }
+            },
+            {
+                "Name":"sprite_controller",
+                "Type":"SpriteController",
+                "args":["shop_display.food_sprite", [3, 1], [0, 145]],
+                "kwargs":{}
+            }
+        ],
+        "Active":0,
+        "Tags":[]
+    },
+    "return_arrow": {
+        "Parent":"shop_menu",
+        "Components":[
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[-100,170], 0],
+                "kwargs": {}
+            },
+            {
+                "Name": "comp_name",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [30, 195, 30, 30],
+                    "layer": 21,
+                    "angle":180
+                }
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[15, -15, 30, 30],
+                "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["unmenu", ["miku", "shop_menu", "food", "games_button", "next_food", "prev_food", "shop_button", "miku_hair", "pause_button"]],
+                "kwargs":{}
+            }
+        ],
+        "Active":0,
+        "Tags":["clickable"]
+    },
+    "prev_produce": {
+        "Parent":"shop_menu",
+        "Components":[
+            {
+                "Name": "arrow_icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [60, 195, 30, 30],
+                    "layer": 21
+                }
+            },
+            {
+                "Name": "arrow_position",
+                "Type": "Transform",
+                "args": [[-100,15], 180, [3, 3]],
+                "kwargs": {}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[45, -45, 90, 90],
+                "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["prev", ["shop_menu"]],
+                "kwargs":{}
+            }
+        ],
+        "Active":0,
+        "Tags":["clickable"]
+    },
+     "next_produce": {
+        "Parent":"shop_menu",
+        "Components":[
+            {
+                "Name": "arrow_icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [60, 195, 30, 30],
+                    "layer": 21
+                }
+            },
+            {
+                "Name": "arrow_position",
+                "Type": "Transform",
+                "args": [[100,15], 0, [3, 3]],
+                "kwargs": {}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[45, -45, 90, 90],
+                "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["next", ["shop_menu"]],
+                "kwargs":{}
+            }
+        ],
+        "Active":0,       
+        "Tags":["clickable"]
+    },
+    "buy_button": {
+        "Parent":"shop_menu",
+        "Components":[
+             {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 195, 30, 30], [3, 3, 10, 10], [9, 3]],
+                "kwargs":{"scale":[2, 2],"layer":22}
 
-    
+            },
+            {
+                "Name":"static_text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"BUY", "font_size":30, "layer":23, "position":[-40, 0]}
+            },
+            {
+                "Name":"price_text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"0", "font_size":30, "layer":23, "position":[45, 0]}
+            },
+
+            {
+                "Name": "coin_icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [30, 225, 30, 30],
+                    "layer": 22,
+                    "position":[20, 0]
+                }
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[0,-140], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["buy", ["shop_menu"]],
+                "kwargs":{}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[26, -76, 52, 152], 
+                "kwargs":{}
+            }
+        ],
+        "Active":0,
+        "Tags":["clickable"]
+    },
+    "funds_display": {
+        "Parent":"shop_menu",
+        "Components":[
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[0,-80], 0],
+                "kwargs": {}
+            },
+            {
+                "Name": "coin_icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [30, 225, 30, 30],
+                    "layer": 22,
+                    "position":[-30, 0]
+                }
+            },
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 255, 30, 30], [3, 3, 10, 10], [9, 5]],
+                "kwargs":{"layer":21}
+            },
+            {
+                "Name":"text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"000", "font_size":20, "position":[15,0], "layer":22}
+            }
+        ],
+        "Active":0,
+        "Tags":[]
+    }
 }

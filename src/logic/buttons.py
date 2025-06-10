@@ -14,10 +14,10 @@ class ButtonScript(Script):
             for target in self._targets:
                 target.message(self._message)
     
-    def pause(self):
+    def menu(self):
         for hitbox in self._hitboxes:
             hitbox._active = False
     
-    def unpause(self):
+    def unmenu(self):
         for hitbox in self._hitboxes:
             hitbox._active = True

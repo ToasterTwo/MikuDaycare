@@ -7,8 +7,12 @@ class SpriteController(gc.Script):
         self._grid = sprite_grid
         self._max_sprite = sprite_grid[0]*sprite_grid[1]
         self._origin = origin
-    
+        self._current_id = 0
+
     def switch_sprite(self, id):
+        if id == self._current_id:
+            return
+        
         w, h = self._sprite._texture_rect[2:]
         if id > self._max_sprite:
             id = id%self._max_sprite
@@ -22,3 +26,4 @@ class SpriteController(gc.Script):
             column = 0
 
         self._sprite._texture_rect = (self._origin[0]+column*w, self._origin[1]+row*h, w, h)
+        self._current_id = id

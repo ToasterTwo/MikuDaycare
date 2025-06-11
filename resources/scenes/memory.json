@@ -1,0 +1,396 @@
+{
+    "master": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name":"main_script",
+                "Type":"MemoryScript",
+                "args":["button1.sprite","button2.sprite","button3.sprite","button4.sprite", "fail_menu", "score_display.text", "total_display.text", "current_score.text"],
+                "kwargs":{}
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[200,300], 45],
+                "kwargs": {}
+            }
+        ],
+        "Tags":[]
+    },
+    "button1": {
+        "Parent":"master",
+        "Components":[
+            {
+                "Name": "sprite",
+                "Type": "Rectangle",
+                "args": [],
+                "kwargs": {"dimensions":[80, 80], 
+                            "color":[255, 0, 0], 
+                            "position":[0,0], 
+                            "layer":5}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[15, -20, 65, 65],
+                "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["b1", ["master"]],
+                "kwargs":{}
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[45,45], 0],
+                "kwargs": {}
+            }
+        ],
+        "Tags":["clickable"]
+    },
+        "button2": {
+        "Parent":"master",
+        "Components":[
+            {
+                "Name": "sprite",
+                "Type": "Rectangle",
+                "args": [],
+                "kwargs": {"dimensions":[80, 80], 
+                            "color":[0, 255, 0], 
+                            "position":[0, 0], 
+                            "layer":5}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[15, -20, 65, 65],
+                "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["b2", ["master"]],
+                "kwargs":{}
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[-45,45], 0],
+                "kwargs": {}
+            }
+
+        ],
+        "Tags":["clickable"]
+    },
+        "button3": {
+        "Parent":"master",
+        "Components":[
+            {
+                "Name": "sprite",
+                "Type": "Rectangle",
+                "args": [],
+                "kwargs": {"dimensions":[80, 80], 
+                            "color":[0, 0, 255], 
+                            "position":[0, 0], 
+                            "layer":5}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[15, -20, 65, 65],
+                "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["b3", ["master"]],
+                "kwargs":{}
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[-45,-45], 0],
+                "kwargs": {}
+            }
+        ],
+        "Tags":["clickable"]
+    },
+        "button4": {
+        "Parent":"master",
+        "Components":[
+            {
+                "Name": "sprite",
+                "Type": "Rectangle",
+                "args": [],
+                "kwargs": {"dimensions":[80, 80], 
+                            "color":[255, 255, 0], 
+                            "position":[0,0], 
+                            "layer":5}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[15, -20, 65, 65],
+                "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["b4", ["master"]],
+                "kwargs":{}
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[45,-45], 0],
+                "kwargs": {}
+            }
+        ],
+        "Tags":["clickable"]
+    },
+    "cursor_follower": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name": "cursor_transform",
+                "Type": "Transform",
+                "args": [[0,0], 0],
+                "kwargs": {}
+            },
+            {
+                "Name": "cursor_sprite",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [30, 255, 25, 25],
+                    "layer": 30
+                }
+            },
+            {
+                "Name":"cursor_hitbox",
+                "Type":"Hitbox",
+                "args":[8, -8, 8, 8],
+                "kwargs":{}
+            },
+            {
+                "Name":"cursor_script",
+                "Type":"CursorScript",
+                "args":["cursor_follower.cursor_transform", "cursor_follower.cursor_hitbox", 600],
+                "kwargs":{}
+            },
+            {
+                "Name":"sprite_controller",
+                "Type":"SpriteController",
+                "args":["cursor_follower.cursor_sprite", [5, 1], [30, 255]],
+                "kwargs":{}
+            }
+        ]
+    },
+    "menu_background": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 225, 30, 30], [3, 3, 10, 10], [8, 10]],
+                "kwargs":{"scale":[4, 4],"layer":20}
+            },
+            {
+                "Name": "transfrom",
+                "Type": "Transform",
+                "args": [[200,300], 0],
+                "kwargs": {}
+            }      
+        ],
+        "Tags":[],
+        "Active":0
+    },
+    "fail_menu": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name":"menu_script",
+                "Type":"MenuScript",
+                "args":[["fail"], ["return_home", "retry"], 
+                    [
+                        "menu_background",
+                        "return_button", 
+                        "retry_button",
+                        "score_display", 
+                        "total_display"
+                    ]],
+                "kwargs":{}
+            },
+            {
+                "Name": "transfrom",
+                "Type": "Transform",
+                "args": [[200,300], 0],
+                "kwargs": {}
+            }
+        ],
+        "Tags":[]
+    },
+    "return_button": {
+        "Parent":"fail_menu",
+        "Components":[
+            {
+                "Name": "icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [30, 195, 30, 30],
+                    "angle":180,
+                    "layer": 21,
+                    "scale":[4, 4]
+                }
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[-80,-70], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[60, -60, 120, 120],
+                "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["return_home", ["fail_menu", "master"]],
+                "kwargs":{}
+            }
+        ],
+        "Active":0,
+        "Tags":["clickable"]
+    },
+    "retry_button": {
+        "Parent":"fail_menu",
+        "Components":[
+            {
+                "Name": "icon",
+                "Type": "Image",
+                "args": [],
+                "kwargs": {
+                    "path": "resources\\images\\spritesheet.png",
+                    "texture_rect": [240, 195, 30, 30],
+                    "layer": 21,
+                    "scale":[4, 4]
+                }
+            },
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[80,-70], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"hitbox",
+                "Type":"Hitbox",
+                "args":[60, -60, 120, 120],
+                "kwargs":{}
+            },
+            {
+                "Name":"button_script",
+                "Type":"ButtonScript",
+                "args":["retry", ["fail_menu", "master"]],
+                "kwargs":{}
+            }
+        ],
+        "Active":0,
+        "Tags":["clickable"]
+    },
+    "score_display": {
+        "Parent":"fail_menu",
+        "Components":[
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[0, 95], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"static_text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"score: ", "font_size":20, "position":[-90,0], "layer":22}
+            },
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 255, 30, 30], [3, 3, 10, 10], [30, 5]],
+                "kwargs":{"layer":21}
+            },
+            {
+                "Name":"text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"000", "font_size":20, "position":[70,0], "layer":22}
+            }
+        ],
+        "Active":0,
+        "Tags":[]
+    },
+    "total_display": {
+        "Parent":"fail_menu",
+        "Components":[
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[0, 40], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"static_text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"total: ", "font_size":20, "position":[-90,0], "layer":22}
+            },
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 255, 30, 30], [3, 3, 10, 10], [30, 5]],
+                "kwargs":{"layer":21}
+            },
+            {
+                "Name":"text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"000", "font_size":20, "position":[70,0], "layer":22}
+            }
+        ],
+        "Active":0,
+        "Tags":[]
+    },
+    "current_score": {
+        "Parent":"None",
+        "Components":[
+            {
+                "Name": "transform",
+                "Type": "Transform",
+                "args": [[100, 550], 0],
+                "kwargs": {}
+            },
+            {
+                "Name":"background",
+                "Type":"TilesetImage",
+                "args":["resources\\images\\spritesheet.png", [0, 255, 30, 30], [3, 3, 10, 10], [15, 4]],
+                "kwargs":{"layer":9}
+            },
+            {
+                "Name":"text",
+                "Type":"Text",
+                "args":[],
+                "kwargs":{"text":"000", "font_size":20, "position":[0,0], "layer":10}
+            }
+        ],
+        "Tags":[]
+    }
+
+}

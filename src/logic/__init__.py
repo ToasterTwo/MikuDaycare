@@ -10,4 +10,6 @@ __all__ = ["creature",
            "tilesets",
            "buttons",
            "menus",
-           "scene_changer"]
+           "scene_changer",
+           "light",
+           "memory_game"]

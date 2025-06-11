@@ -16,7 +16,6 @@ class SceneChanger(Script):
         attrs = {}
 
         for m in message_mapping:
-            print(message_mapping[m])
             attrs[m] = scene_switcher_method(message_mapping[m])
         
         classname = ""

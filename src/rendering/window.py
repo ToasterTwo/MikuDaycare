@@ -51,8 +51,8 @@ class Window:
                     height*= scale_y
                     shape = pygame.Rect(center_x-width/2, self._window.get_height()-center_y-height/2, width, height)
                     shape_surf = pygame.Surface(shape.size, pygame.SRCALPHA)
-                    shape_surf = pygame.transform.rotate(shape_surf, obj.global_position[2])
                     pygame.draw.rect(shape_surf, obj.color, shape_surf.get_rect())
+                    shape_surf = manager.transform(shape_surf, (1, 1), obj.global_position[2])
                     self._window.blit(shape_surf, shape)
                 
                 case lr.ResourceType.TILES:

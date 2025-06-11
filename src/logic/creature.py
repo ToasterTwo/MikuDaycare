@@ -11,9 +11,9 @@ class CreatureBehaviour(Script):
                  eyes: GameObject, mouth: GameObject):
         Script.__init__(self, parent)
         self._max_value = 100
-        self._hunger = 10
+        self._hunger = 100
         self._happiness = 100
-        self._energy = 100
+        self._energy = 10
         self._inner_clock : float = 0.
         self._happy_bar : GameObject = happy_bar
         self._hungry_bar: GameObject = hungry_bar
@@ -26,6 +26,8 @@ class CreatureBehaviour(Script):
         self._mouth = mouth
         self._death_counter = 0
         self._dead = False
+        self._dark = False
+        self._sleeping = False
 
     def init(self):
         self._coins_display._text = f"{self._coins:03}"
@@ -49,11 +51,15 @@ class CreatureBehaviour(Script):
         if self._inner_clock<=0:
             
             if self._hunger > 0:
-                self._hunger-=2
+                if self._sleeping:
+                    self._hunger-=0.5
+                else:
+                    self._hunger-=2
+
             if self._happiness < 0:
                 self._happiness = 0
             
-            if self._happiness < 0:
+            if self._hunger < 0:
                 self._happiness = 0
             
             if self._energy<0:
@@ -63,11 +69,21 @@ class CreatureBehaviour(Script):
                 self._happiness -=5
             elif self._hunger<60:
                 self._happiness-=1
+            
+            if self._sleeping and self._energy<100:
+                self._energy=min(self._energy+1, 100)
+        
+            if self._energy==100 and self._sleeping:
+                self._sleeping = False
 
+            if self._dark and not self._sleeping:
+                self._happiness-=2
 
             self._inner_clock = 2
             self._hungry_bar.message("set_value", self._hunger)
             self._happy_bar.message("set_value", self._happiness)
+            self._energy_bar.message("set_value", self._energy)
+
 
             if self._hunger ==0:
                 self._death_counter+=1
@@ -88,7 +104,7 @@ class CreatureBehaviour(Script):
             
 
     def feed(self, food_data: FoodData):
-        if not self._dead:
+        if not self._dead and not self._sleeping:
             if self._hunger < 95:
                 self._hunger = min(self._hunger+food_data.saturation, self._max_value)
                 self._hungry_bar.message("set_value", self._hunger)
@@ -101,7 +117,7 @@ class CreatureBehaviour(Script):
         self._paused = False
 
     def pet(self):
-        if not self._dead:
+        if not self._dead and not self._sleeping:
             self._happiness =  min(self._happiness+5, self._max_value)
             self._happy_bar.message("set_value", self._happiness)
             self._sprite_change_timer = 1
@@ -111,11 +127,18 @@ class CreatureBehaviour(Script):
         eyes_id = 0
         if self._dead:
             mouth_id = 6
+        elif self._sleeping:
+            mouth_id = 7
+        
+        elif self._dark and not self._sleeping:
+            mouth_id = 3
+
         elif self._mouth_sprite.is_open:
             if self._hunger <= 95:
                 mouth_id = 2
             else:
                 mouth_id = 5
+
         elif self._sprite_change_timer>0:
             mouth_id = 4
         elif self._happiness < 20:
@@ -127,6 +150,8 @@ class CreatureBehaviour(Script):
 
         if self._dead:
             eyes_id = 3
+        elif self._sleeping:
+            eyes_id = 4
         elif self._sprite_change_timer>0:
             eyes_id = 1
         elif self._mouth_sprite.is_open and self._hunger>=95:
@@ -137,6 +162,14 @@ class CreatureBehaviour(Script):
         self._eyes_sprite.switch_sprite(eyes_id)
         self._mouth_sprite.switch_sprite(mouth_id)
 
+    def toggle_light(self):
+        self._dark = not self._dark
+        if self._dark:
+            if self._energy<=90:
+                self._sleeping = True
+        else:
+            self._sleeping = False
+        
 
 
 class MouthScript(SpriteController):

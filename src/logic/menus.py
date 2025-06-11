@@ -4,7 +4,7 @@ from logic.food import *
 
 class MenuScript(Script):
     derivative_id = 0
-    def __init__(self, parent: GameObject, activate_messages:list[str], deactivate_messages:list[str], menu_elements:list[Component]):
+    def __init__(self, parent: GameObject, activate_messages:list[str], deactivate_messages:list[str], menu_elements:list[Component], other_elements:list[Component]=[]):
         
         #pretty sure this is evil but what the hell
         attrs = {}
@@ -25,14 +25,20 @@ class MenuScript(Script):
 
         Script.__init__(self, parent)
         self._menu_elements = menu_elements
+        self._other_elements = other_elements
 
     def activate(self):
         for element in self._menu_elements: #type:ignore
             element._active = True 
+        for element in self._other_elements:
+            element._active = False
+        
 
     def deactivate(self):
         for element in self._menu_elements: #type:ignore
             element._active = False 
+        for element in self._other_elements:
+            element._active = False
     
 
 class ShopScript(Script):

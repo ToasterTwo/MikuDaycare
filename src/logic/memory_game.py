@@ -10,7 +10,7 @@ class MemoryScript(Script):
         self._button2 = button2
         self._button3 = button3
         self._button4 = button4
-        
+
         # 0 - playing, 1 - awaiting input, 2 - success animation and reset, 3 - failure animation, 4 - reset 5-wait to restart
         self._state = 0
         self._playback_timer = 0
@@ -186,5 +186,7 @@ class MemoryScript(Script):
     
     def return_home(self):
         context.set_by_alias("main")
+        context.global_vars["score"] = self._session_score
+        context.global_vars["energy"] = self._session_score
         self._score = 0
         self._session_score = 0

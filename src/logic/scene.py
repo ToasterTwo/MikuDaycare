@@ -4,6 +4,7 @@ from logic.logic_resource import *
 import json
 
 class Scene:
+    '''A class representing some collection of game objects, responsible for managing them'''
     def __init__(self):
         self._objects: list[GameObject] = []
 
@@ -12,6 +13,7 @@ class Scene:
             self._objects.append(obj)
     
     def update(self, delta_time: float):
+        '''Called every frame'''
         Hitbox.recalculate_collisions(self)
         for obj in self._objects:
             if obj._active:
@@ -23,10 +25,12 @@ class Scene:
                 obj.on_event(event)
     
     def init(self):
+        '''called once on the start'''
         for obj in self._objects:
             obj.init()
     
     def get_resources(self) -> tuple[LogicResource, ...]:
+        '''returns all resources to be rendered this frame'''
         resources = []
         for obj in self._objects:
             if not obj._active:
@@ -54,6 +58,9 @@ class Scene:
 
 
 def from_json(filepath:str):
+    '''Constructs a Scene object from a .json style description'''
+
+
     scene = Scene()
     Hitbox.register_scene(scene)
 

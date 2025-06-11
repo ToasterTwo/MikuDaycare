@@ -3,9 +3,27 @@ from logic.creature import *
 from logic.food import *
 
 class MenuScript(Script):
+    '''A utility class for managing object collections
+    
+    The name comes from the initial use of this class, however it is better to think of it as a generic toggle manager for sets of objects.
+    It defines two sets of GameObjects that are activated/deactivated when a given message is given
+
+    Because of the way messages are implemented, this class needs to be derived to work the way it's intended (reacting to messages without special accomodation).
+    However, creating potentially countless derivative classes by hand would be torture. So instead, this class's constructor acts as a factory.
+    Initializing a MenuScript object creates a new class named MenuScript#[id], which has given messages set as attribute names for the activate and deactivate methods.
+    A MenuScript# is not a derivative of MenuScript, but of Script.
+    '''
     derivative_id = 0
     def __init__(self, parent: GameObject, activate_messages:list[str], deactivate_messages:list[str], menu_elements:list[Component], other_elements:list[Component]=[]):
-        
+        '''Create or reinitialize a new MenuScript#[id] object
+
+        Parameters
+        ----------
+        activate_messages, deactivate_messages:list[str]
+            messages that should activate menu elements and deactivate other elements or vice versa
+        menu_elements, other_elemets: list[Component]
+            sets of elements that this Script will operate on
+        '''
         #pretty sure this is evil but what the hell
         attrs = {}
         for m in activate_messages:
@@ -38,7 +56,7 @@ class MenuScript(Script):
         for element in self._menu_elements: #type:ignore
             element._active = False 
         for element in self._other_elements:
-            element._active = False
+            element._active = True
     
 
 class ShopScript(Script):

@@ -624,7 +624,7 @@
             {
                 "Name":"button_script",
                 "Type":"ButtonScript",
-                "args":["menu", ["miku", "games_menu", "food", "games_button", "next_food", "prev_food", "shop_button", "miku_hair"]],
+                "args":["menu", ["games_menu"]],
                 "kwargs":{}
             }
         ],
@@ -732,7 +732,8 @@
                         "load_button",
                         "quit_button",
                         "menu_background"
-                    ]],
+                    ],
+                ["miku", "food.food_hitbox", "games_button.hitbox", "next_food.hitbox", "prev_food.hitbox", "shop_button.hitbox", "miku_hair.petting_area", "pause_button.hitbox", "light_button.hitbox"]],
                 "kwargs":{}
             },
             {
@@ -770,7 +771,7 @@
             {
                 "Name":"button_script",
                 "Type":"ButtonScript",
-                "args":["unmenu", ["miku", "pause_menu", "food", "games_button", "next_food", "prev_food", "shop_button", "miku_hair"]],
+                "args":["unmenu", ["pause_menu"]],
                 "kwargs":{}
             },
             {
@@ -960,7 +961,8 @@
                         "prev_produce",
                         "buy_button",
                         "funds_display"
-                    ]],
+                    ],
+                ["miku", "food.food_hitbox", "games_button.hitbox", "next_food.hitbox", "prev_food.hitbox", "shop_button.hitbox", "miku_hair.petting_area", "pause_button.hitbox", "light_button.hitbox"]],
                 "kwargs":{}
             },
             {
@@ -1036,7 +1038,7 @@
             {
                 "Name":"button_script",
                 "Type":"ButtonScript",
-                "args":["unmenu", ["miku", "shop_menu","games_menu", "food", "games_button", "next_food", "prev_food", "shop_button", "miku_hair", "pause_button"]],
+                "args":["unmenu", ["shop_menu", "games_menu"]],
                 "kwargs":{}
             }
         ],

@@ -1,6 +1,18 @@
 import pygame
 
 class ResourceManager:
+    '''a utility class for resource management and caching
+    
+    Attributes
+    ----------
+    _source_cache: dict[str, pygame.Surface]
+        a dict for storing source images and fonts to avoid reloading them every frame
+    _sprite_cache: dict[str, pygame.Surface]
+        a dict for storing already cut out images to avoid reloading them every frame
+    _tiles_cache: dict[int, pygame.Surface]
+        a dict for storing already constructed tile images to avoid rebuilding them every frame
+    
+    '''
     def __init__(self):
         self._source_cache = {}
         self._sprite_cache = {}
@@ -13,12 +25,14 @@ class ResourceManager:
         return self._source_cache[path]
     
     def transform(self, surf: pygame.Surface, scale_by: tuple[float, float], angle: float)->pygame.Surface:
-        
+        '''Returns a copy of the given Surface scaled and rotated'''
+
         inter = pygame.transform.scale_by(surf, scale_by)
         return pygame.transform.rotate(inter, angle)
         
     
     def cutout_rect(self, surf: pygame.Surface, rect: pygame.rect.Rect)->pygame.Surface:
+        '''Cuts out a given rect from the given surface and returns it as a new surface'''
         hsh = (surf, rect.top, rect.left, rect.bottom, rect.right)
         if not hsh in self._sprite_cache:
             sprite = pygame.Surface(rect.size, pygame.SRCALPHA)
@@ -34,9 +48,9 @@ class ResourceManager:
                      rect:pygame.rect.Rect, 
                      grid: tuple[int, int, int, int],
                      size: tuple[int, int]):
+        '''Creates and caches a tileset based image'''
         
         if id not in self._tiles_cache:
-            
         
             base = self.cutout_rect(self.fetch_image(source), rect)
             x_count, y_count, tile_width, tile_height = grid

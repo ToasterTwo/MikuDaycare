@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>logic package &#8212; MikuPettingSimulator 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="main module" href="main.html" />
+    <link rel="prev" title="rendering package" href="rendering.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="logic-package">
+<h1>logic package<a class="headerlink" href="#logic-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-logic.buttons">
+<span id="logic-buttons-module"></span><h2>logic.buttons module<a class="headerlink" href="#module-logic.buttons" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.buttons.ButtonScript">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.buttons.</span></span><span class="sig-name descname"><span class="pre">ButtonScript</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.buttons.ButtonScript" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Script" title="logic.game_components.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a></p>
+<p>Script used to easily define a button functionality.</p>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>_message: str</dt><dd><p>message passed to targets on button activation</p>
+</dd>
+<dt>_targets: list[GameObject]</dt><dd><p>GameObjects that will recieve information about this button being activated</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.buttons.ButtonScript.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.buttons.ButtonScript.init" title="Link to this definition">¶</a></dt>
+<dd><p>Called only once before anything else</p>
+<p>Use this method to do final object preparations. In particular all calls to other objects that could be in __init__, should be here to avoid
+calling objects that do not exist yet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.buttons.ButtonScript.menu">
+<span class="sig-name descname"><span class="pre">menu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.buttons.ButtonScript.menu" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.buttons.ButtonScript.mouse">
+<span class="sig-name descname"><span class="pre">mouse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">down</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.buttons.ButtonScript.mouse" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.buttons.ButtonScript.unmenu">
+<span class="sig-name descname"><span class="pre">unmenu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.buttons.ButtonScript.unmenu" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-logic.context">
+<span id="logic-context-module"></span><h2>logic.context module<a class="headerlink" href="#module-logic.context" title="Link to this heading">¶</a></h2>
+<p>A module serving as a way to easily manage multiple scenes.</p>
+<p>The whole module should be treated as a singular instance of a hypothetical context class.</p>
+<section id="id1">
+<h3>Attributes<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>current_scene: Scene</dt><dd><p>self explanatory</p>
+</dd>
+<dt>next_scene: Scene</dt><dd><p>this scene will be placed as the current scene after update is called</p>
+</dd>
+<dt>scenes: dict[str, Scene]</dt><dd><p>a dict correlating each loaded scene with its alias. The alias of a scene is the name of its .json file without the extension</p>
+</dd>
+<dt>global_vars: dict[str, Any]</dt><dd><p>a dict used for cross-scene variable passing</p>
+</dd>
+</dl>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>set_current_scene(scene)</dt><dd><p>schedules a scene switch</p>
+</dd>
+<dt>update()</dt><dd><p>executes a scheduled scene switch</p>
+</dd>
+<dt>load_scene(source, alias)</dt><dd><p>loads a scene from the path given as the source and saves it in the scenes dict under alias</p>
+</dd>
+<dt>set_by_alias(alias)</dt><dd><p>same as set_current_scene, except takes the scene’s alias.</p>
+</dd>
+<dt>load_scene_set_from_directory(directory)</dt><dd><p>loads all the .json files from directory as scenes</p>
+</dd>
+</dl>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="logic.context.load_scene">
+<span class="sig-prename descclassname"><span class="pre">logic.context.</span></span><span class="sig-name descname"><span class="pre">load_scene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.context.load_scene" title="Link to this definition">¶</a></dt>
+<dd><p>Loads a scene from source under alias</p>
+<p>Source must be a path to a .json file. Alias can be any string.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="logic.context.load_scene_set_from_directory">
+<span class="sig-prename descclassname"><span class="pre">logic.context.</span></span><span class="sig-name descname"><span class="pre">load_scene_set_from_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.context.load_scene_set_from_directory" title="Link to this definition">¶</a></dt>
+<dd><p>loads all .json files from a given directory</p>
+<p>giving it a directory with .json files that arent’s scene descriptors will result in undefined behaviour when attempting a load.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="logic.context.set_by_alias">
+<span class="sig-prename descclassname"><span class="pre">logic.context.</span></span><span class="sig-name descname"><span class="pre">set_by_alias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.context.set_by_alias" title="Link to this definition">¶</a></dt>
+<dd><p>Calls set_current_scene with the scene assigned to alias.</p>
+<p>Alias “.null” is tied to a None object. Switching to it effectively means program termination.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="logic.context.set_current_scene">
+<span class="sig-prename descclassname"><span class="pre">logic.context.</span></span><span class="sig-name descname"><span class="pre">set_current_scene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.scene.Scene" title="logic.scene.Scene"><span class="pre">Scene</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.context.set_current_scene" title="Link to this definition">¶</a></dt>
+<dd><p>Schedules a scene change</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="logic.context.update">
+<span class="sig-prename descclassname"><span class="pre">logic.context.</span></span><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.context.update" title="Link to this definition">¶</a></dt>
+<dd><p>Executes a scene change if the next scene is not the current scene</p>
+</dd></dl>
+
+</section>
+<section id="module-logic.creature">
+<span id="logic-creature-module"></span><h2>logic.creature module<a class="headerlink" href="#module-logic.creature" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.creature.CreatureBehaviour">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.creature.</span></span><span class="sig-name descname"><span class="pre">CreatureBehaviour</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">happy_bar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hungry_bar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy_bar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">coins_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Text" title="logic.game_components.Text"><span class="pre">Text</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">eyes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mouth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.creature.CreatureBehaviour" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Script" title="logic.game_components.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a></p>
+<p>Script controlling most things in the main scene</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.creature.CreatureBehaviour.feed">
+<span class="sig-name descname"><span class="pre">feed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">food_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.food.FoodData" title="logic.food.FoodData"><span class="pre">FoodData</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.creature.CreatureBehaviour.feed" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.creature.CreatureBehaviour.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.creature.CreatureBehaviour.init" title="Link to this definition">¶</a></dt>
+<dd><p>Called only once before anything else</p>
+<p>Use this method to do final object preparations. In particular all calls to other objects that could be in __init__, should be here to avoid
+calling objects that do not exist yet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.creature.CreatureBehaviour.pet">
+<span class="sig-name descname"><span class="pre">pet</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.creature.CreatureBehaviour.pet" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.creature.CreatureBehaviour.resolve_state">
+<span class="sig-name descname"><span class="pre">resolve_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.creature.CreatureBehaviour.resolve_state" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.creature.CreatureBehaviour.toggle_light">
+<span class="sig-name descname"><span class="pre">toggle_light</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.creature.CreatureBehaviour.toggle_light" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.creature.CreatureBehaviour.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.creature.CreatureBehaviour.update" title="Link to this definition">¶</a></dt>
+<dd><p>Called every frame</p>
+<p>This method is responsible for processing the object after a frame.</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>delta_time:float</dt><dd><p>time [in seconds] that was elapsed since the last frame</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.creature.MouthScript">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.creature.</span></span><span class="sig-name descname"><span class="pre">MouthScript</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mouth_sprite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Image" title="logic.game_components.Image"><span class="pre">Image</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sprite_grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">food_box</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Hitbox" title="logic.game_components.Hitbox"><span class="pre">Hitbox</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.creature.MouthScript" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.sprite_controller.SpriteController" title="logic.sprite_controller.SpriteController"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpriteController</span></code></a></p>
+<p>Script controlling the mouth sprite. It used to do more but became simple utility with production</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.creature.MouthScript.die">
+<span class="sig-name descname"><span class="pre">die</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.creature.MouthScript.die" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.creature.MouthScript.feed">
+<span class="sig-name descname"><span class="pre">feed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">food_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.food.FoodData" title="logic.food.FoodData"><span class="pre">FoodData</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.creature.MouthScript.feed" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.creature.MouthScript.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.creature.MouthScript.init" title="Link to this definition">¶</a></dt>
+<dd><p>Called only once before anything else</p>
+<p>Use this method to do final object preparations. In particular all calls to other objects that could be in __init__, should be here to avoid
+calling objects that do not exist yet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.creature.MouthScript.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.creature.MouthScript.update" title="Link to this definition">¶</a></dt>
+<dd><p>Called every frame</p>
+<p>This method is responsible for processing the object after a frame.</p>
+<section id="id2">
+<h3>Parameters<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>delta_time:float</dt><dd><p>time [in seconds] that was elapsed since the last frame</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-logic.cursor">
+<span id="logic-cursor-module"></span><h2>logic.cursor module<a class="headerlink" href="#module-logic.cursor" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.cursor.CursorScript">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.cursor.</span></span><span class="sig-name descname"><span class="pre">CursorScript</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Transform" title="logic.game_components.Transform"><span class="pre">Transform</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hitbox</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Hitbox" title="logic.game_components.Hitbox"><span class="pre">Hitbox</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.cursor.CursorScript" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Script" title="logic.game_components.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a></p>
+<p>Script for the fake cursor.</p>
+<p>The cursor is in fact a small hitbox with a sprite. A mouse button event leads to all hitboxes colliding with it to recieve a “mouse” message, alongside
+the number of the button of the event (same as pygame) and wether it was pressed down.</p>
+<p>Any Script that should react to cursor clicks (like buttons) should implement a mouse(button, down) method.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.cursor.CursorScript.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.cursor.CursorScript.init" title="Link to this definition">¶</a></dt>
+<dd><p>Called only once before anything else</p>
+<p>Use this method to do final object preparations. In particular all calls to other objects that could be in __init__, should be here to avoid
+calling objects that do not exist yet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.cursor.CursorScript.on_event">
+<span class="sig-name descname"><span class="pre">on_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Event</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#logic.cursor.CursorScript.on_event" title="Link to this definition">¶</a></dt>
+<dd><p>Called to handle an event</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.cursor.CursorScript.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.cursor.CursorScript.update" title="Link to this definition">¶</a></dt>
+<dd><p>Called every frame</p>
+<p>This method is responsible for processing the object after a frame.</p>
+<section id="id3">
+<h3>Parameters<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>delta_time:float</dt><dd><p>time [in seconds] that was elapsed since the last frame</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.cursor.CursorScript.update_sprite">
+<span class="sig-name descname"><span class="pre">update_sprite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.cursor.CursorScript.update_sprite" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-logic.food">
+<span id="logic-food-module"></span><h2>logic.food module<a class="headerlink" href="#module-logic.food" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.food.FoodCloneScript">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.food.</span></span><span class="sig-name descname"><span class="pre">FoodCloneScript</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sprite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.sprite_controller.SpriteController" title="logic.sprite_controller.SpriteController"><span class="pre">SpriteController</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Transform" title="logic.game_components.Transform"><span class="pre">Transform</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mouth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodCloneScript" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Script" title="logic.game_components.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.food.FoodCloneScript.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodCloneScript.init" title="Link to this definition">¶</a></dt>
+<dd><p>Called only once before anything else</p>
+<p>Use this method to do final object preparations. In particular all calls to other objects that could be in __init__, should be here to avoid
+calling objects that do not exist yet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.food.FoodCloneScript.mouse">
+<span class="sig-name descname"><span class="pre">mouse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">down</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodCloneScript.mouse" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.food.FoodCloneScript.pick_food">
+<span class="sig-name descname"><span class="pre">pick_food</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">food</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.food.FoodData" title="logic.food.FoodData"><span class="pre">FoodData</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodCloneScript.pick_food" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.food.FoodCloneScript.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodCloneScript.update" title="Link to this definition">¶</a></dt>
+<dd><p>Called every frame</p>
+<p>This method is responsible for processing the object after a frame.</p>
+<section id="id4">
+<h3>Parameters<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>delta_time:float</dt><dd><p>time [in seconds] that was elapsed since the last frame</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.food.FoodData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.food.</span></span><span class="sig-name descname"><span class="pre">FoodData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sprite_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saturation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cost</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodData" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.food.FoodData.amount">
+<span class="sig-name descname"><span class="pre">amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#logic.food.FoodData.amount" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.food.FoodData.cost">
+<span class="sig-name descname"><span class="pre">cost</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#logic.food.FoodData.cost" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.food.FoodData.saturation">
+<span class="sig-name descname"><span class="pre">saturation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#logic.food.FoodData.saturation" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.food.FoodData.sprite_id">
+<span class="sig-name descname"><span class="pre">sprite_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#logic.food.FoodData.sprite_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.food.FoodScript">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.food.</span></span><span class="sig-name descname"><span class="pre">FoodScript</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sprite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.sprite_controller.SpriteController" title="logic.sprite_controller.SpriteController"><span class="pre">SpriteController</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hitbox</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Hitbox" title="logic.game_components.Hitbox"><span class="pre">Hitbox</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Image" title="logic.game_components.Image"><span class="pre">Image</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">clone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">food_counter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Text" title="logic.game_components.Text"><span class="pre">Text</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodScript" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Script" title="logic.game_components.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.food.FoodScript.cursor_enter">
+<span class="sig-name descname"><span class="pre">cursor_enter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodScript.cursor_enter" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.food.FoodScript.cursor_exit">
+<span class="sig-name descname"><span class="pre">cursor_exit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodScript.cursor_exit" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.food.FoodScript.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodScript.init" title="Link to this definition">¶</a></dt>
+<dd><p>Called only once before anything else</p>
+<p>Use this method to do final object preparations. In particular all calls to other objects that could be in __init__, should be here to avoid
+calling objects that do not exist yet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.food.FoodScript.menu">
+<span class="sig-name descname"><span class="pre">menu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodScript.menu" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.food.FoodScript.mouse">
+<span class="sig-name descname"><span class="pre">mouse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">down</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodScript.mouse" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.food.FoodScript.next">
+<span class="sig-name descname"><span class="pre">next</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodScript.next" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.food.FoodScript.prev">
+<span class="sig-name descname"><span class="pre">prev</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodScript.prev" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.food.FoodScript.unmenu">
+<span class="sig-name descname"><span class="pre">unmenu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodScript.unmenu" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.food.FoodScript.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.food.FoodScript.update" title="Link to this definition">¶</a></dt>
+<dd><p>Called every frame</p>
+<p>This method is responsible for processing the object after a frame.</p>
+<section id="id5">
+<h3>Parameters<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>delta_time:float</dt><dd><p>time [in seconds] that was elapsed since the last frame</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-logic.game_components">
+<span id="logic-game-components-module"></span><h2>logic.game_components module<a class="headerlink" href="#module-logic.game_components" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.game_components.Component">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.game_components.</span></span><span class="sig-name descname"><span class="pre">Component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">active</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Component" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for the elements of the game</p>
+<section id="id6">
+<h3>Attributes<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>_parent: GameObject</dt><dd><p>the Game object that this component is attached to</p>
+</dd>
+<dt>_active: bool</dt><dd><p>wether this component is active. While a component is inactive it gets ignored by all other components. 
+For a component to be active, both it and its parent need to be active</p>
+</dd>
+<dt>NAME_MAP: dict[str, type]</dt><dd><p>a dict containing name-type pairs of every class deriving from Component</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.game_components.Component.NAME_MAP">
+<span class="sig-name descname"><span class="pre">NAME_MAP</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">type</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ButtonScript':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.buttons.ButtonScript'&gt;,</span> <span class="pre">'CreatureBehaviour':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.creature.CreatureBehaviour'&gt;,</span> <span class="pre">'CursorScript':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.cursor.CursorScript'&gt;,</span> <span class="pre">'FoodCloneScript':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.food.FoodCloneScript'&gt;,</span> <span class="pre">'FoodScript':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.food.FoodScript'&gt;,</span> <span class="pre">'GameObject':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.game_components.GameObject'&gt;,</span> <span class="pre">'Hitbox':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.game_components.Hitbox'&gt;,</span> <span class="pre">'Image':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.game_components.Image'&gt;,</span> <span class="pre">'MouthScript':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.creature.MouthScript'&gt;,</span> <span class="pre">'Rectangle':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.game_components.Rectangle'&gt;,</span> <span class="pre">'Renderable':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.game_components.Renderable'&gt;,</span> <span class="pre">'Script':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.game_components.Script'&gt;,</span> <span class="pre">'SpriteController':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.sprite_controller.SpriteController'&gt;,</span> <span class="pre">'Text':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.game_components.Text'&gt;,</span> <span class="pre">'Transform':</span> <span class="pre">&lt;class</span> <span class="pre">'logic.game_components.Transform'&gt;}</span></em><a class="headerlink" href="#logic.game_components.Component.NAME_MAP" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Component.from_name">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Component.from_name" title="Link to this definition">¶</a></dt>
+<dd><p>Create a component object by giving the name of the derivative class and appropriate positional and keyword arguments.</p>
+<p>Passing improper args or kwargs may result in errors.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Component.is_active">
+<span class="sig-name descname"><span class="pre">is_active</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#logic.game_components.Component.is_active" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Component.set_parent">
+<span class="sig-name descname"><span class="pre">set_parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Component.set_parent" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.game_components.GameObject">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.game_components.</span></span><span class="sig-name descname"><span class="pre">GameObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Component" title="logic.game_components.Component"><span class="pre">Component</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Component" title="logic.game_components.Component"><span class="pre">Component</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.GameObject" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Component" title="logic.game_components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a></p>
+<p>A component logically representing a single object in the game.</p>
+<p>It effectively serves as a container class for other components. It also facilitates updates, event handling, and cross-object communication.</p>
+<p>A game object only sees its parent and its components. It does not have immidiate access to every game object that has it set as a parent.</p>
+<section id="id7">
+<h3>Attributes<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>_parent, _active:</dt><dd><p>inherited from Component</p>
+</dd>
+<dt>_components: list[Component]</dt><dd><p>a list of components attached to this game object</p>
+</dd>
+<dt>_tags: set[str]</dt><dd><p>a set of additional descriptors, that can be checked for by other elements.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.GameObject.add_components">
+<span class="sig-name descname"><span class="pre">add_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Component" title="logic.game_components.Component"><span class="pre">Component</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#logic.game_components.GameObject.add_components" title="Link to this definition">¶</a></dt>
+<dd><p>Adds component to self._components and sets itself as their parent</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.GameObject.add_tag">
+<span class="sig-name descname"><span class="pre">add_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#logic.game_components.GameObject.add_tag" title="Link to this definition">¶</a></dt>
+<dd><p>adds a tag</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.GameObject.get_component">
+<span class="sig-name descname"><span class="pre">get_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inheritance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#logic.game_components.Component" title="logic.game_components.Component"><span class="pre">Component</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#logic.game_components.GameObject.get_component" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the first component of a _type that is tied to this GameObject</p>
+<p>Useful when you are sure there is only one component of a given type (ex. a Transform)</p>
+<section id="id8">
+<h4>Parameters<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h4>
+<dl class="simple">
+<dt>_type: type</dt><dd><p>the type that this method is supposed to check for</p>
+</dd>
+<dt>inheritance: bool</dt><dd><p>wether types derived from _type should be included</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.GameObject.get_components">
+<span class="sig-name descname"><span class="pre">get_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inheritance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#logic.game_components.Component" title="logic.game_components.Component"><span class="pre">Component</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#logic.game_components.GameObject.get_components" title="Link to this definition">¶</a></dt>
+<dd><p>Returns all components tied to this GameObject that are of _type</p>
+<section id="id9">
+<h4>Parameters<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h4>
+<dl class="simple">
+<dt>_type: type</dt><dd><p>the type that this method is supposed to check for</p>
+</dd>
+<dt>inheritance: bool</dt><dd><p>wether types derived from _type should be included</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.GameObject.has_tag">
+<span class="sig-name descname"><span class="pre">has_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#logic.game_components.GameObject.has_tag" title="Link to this definition">¶</a></dt>
+<dd><p>checks for a tag</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.GameObject.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#logic.game_components.GameObject.init" title="Link to this definition">¶</a></dt>
+<dd><p>calls the init method of all tied Scripts</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.GameObject.message">
+<span class="sig-name descname"><span class="pre">message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#logic.game_components.GameObject.message" title="Link to this definition">¶</a></dt>
+<dd><p>An interface for an “easy” command system.</p>
+<p>The method iterates over all tied scripts and checks if its type has a method with a name corresponding to the message. If it does, that method is called, with the script as self.
+Any return value from the called method will be promptly ignored.</p>
+<section id="id10">
+<h4>Parameters<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h4>
+<dl class="simple">
+<dt>message: str</dt><dd><p>the name of the method to be called</p>
+</dd>
+<dt><a href="#id11"><span class="problematic" id="id12">*</span></a>args: Any</dt><dd><p>arguments to be passed to the method call</p>
+</dd>
+</dl>
+<p>Note: incorrectly given args will cause an error</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.GameObject.on_event">
+<span class="sig-name descname"><span class="pre">on_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#logic.game_components.GameObject.on_event" title="Link to this definition">¶</a></dt>
+<dd><p>calls the on_event method of all tied Scripts</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.GameObject.remove_tag">
+<span class="sig-name descname"><span class="pre">remove_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#logic.game_components.GameObject.remove_tag" title="Link to this definition">¶</a></dt>
+<dd><p>removes a tag</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.GameObject.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#logic.game_components.GameObject.update" title="Link to this definition">¶</a></dt>
+<dd><p>calls the update method of all tied Scripts</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.game_components.Hitbox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.game_components.</span></span><span class="sig-name descname"><span class="pre">Hitbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Hitbox" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Component" title="logic.game_components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a></p>
+<p>A class implementing box collision functionality</p>
+<section id="id13">
+<h3>Attributes<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>_top, _left, _bottom, _right: float</dt><dd><p>coordinates of the 4 edges of the box</p>
+</dd>
+<dt>ALL_BOXES: dict[Scene:list[Hitbox]]</dt><dd><p>a dict containig all boxes, separating them by scene in which they were defined</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.game_components.Hitbox.ALL_BOXES">
+<span class="sig-name descname"><span class="pre">ALL_BOXES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#logic.game_components.Hitbox.ALL_BOXES" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Hitbox.collides">
+<span class="sig-name descname"><span class="pre">collides</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#logic.game_components.Hitbox.collides" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Hitbox.get_colliding">
+<span class="sig-name descname"><span class="pre">get_colliding</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#logic.game_components.Component" title="logic.game_components.Component"><span class="pre">Component</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#logic.game_components.Hitbox.get_colliding" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Hitbox.get_global_bounds">
+<span class="sig-name descname"><span class="pre">get_global_bounds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#logic.game_components.Hitbox.get_global_bounds" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the global top, left, bottom and right coordinates of this hitbox</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Hitbox.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#logic.game_components.Hitbox.move" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Hitbox.recalculate_collisions">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">recalculate_collisions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Hitbox.recalculate_collisions" title="Link to this definition">¶</a></dt>
+<dd><p>Recalculates all collisions between boxes in a given scene</p>
+<p>Collisions are stored as a list of colliding boxes in each hitbox.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Hitbox.register_scene">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register_scene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Hitbox.register_scene" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.game_components.Hitbox.registering_scene">
+<span class="sig-name descname"><span class="pre">registering_scene</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#logic.game_components.Hitbox.registering_scene" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Hitbox.set_bounds">
+<span class="sig-name descname"><span class="pre">set_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#logic.game_components.Hitbox.set_bounds" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.game_components.Image">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.game_components.</span></span><span class="sig-name descname"><span class="pre">Image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texture_rect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">-1,</span> <span class="pre">-1)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Image" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Renderable" title="logic.game_components.Renderable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Renderable</span></code></a></p>
+<p>A Component representing an Image</p>
+<section id="id14">
+<h3>Attributes<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>_path: str</dt><dd><p>Path to a source file that this image comes from</p>
+</dd>
+<dt>_texture_rect: tuple[int, int, int, int]</dt><dd><p>Data used to cut out only a part of the image.
+In order: x and y coordinates of the top left corner of the cutout, its width, and its height</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Image.get_resource">
+<span class="sig-name descname"><span class="pre">get_resource</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#logic.logic_resource.LogicResource" title="logic.logic_resource.LogicResource"><span class="pre">LogicResource</span></a></span></span><a class="headerlink" href="#logic.game_components.Image.get_resource" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a LogicResource representing this Renderable</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.game_components.Rectangle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.game_components.</span></span><span class="sig-name descname"><span class="pre">Rectangle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(100,</span> <span class="pre">100)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(255,</span> <span class="pre">255,</span> <span class="pre">255,</span> <span class="pre">255)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[0.0,</span> <span class="pre">0.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Rectangle" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Renderable" title="logic.game_components.Renderable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Renderable</span></code></a></p>
+<p>A colored rectangle, go figure</p>
+<section id="id15">
+<h3>Attributes<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>_dimensions: tuple[float, float]</dt><dd><p>width and height of this rectangle</p>
+</dd>
+<dt>_color: tuple[int, int, int] | tuple[int, int, int, int]</dt><dd><p>color of this rectangle (supports transparency)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Rectangle.get_resource">
+<span class="sig-name descname"><span class="pre">get_resource</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#logic.logic_resource.LogicResource" title="logic.logic_resource.LogicResource"><span class="pre">LogicResource</span></a></span></span><a class="headerlink" href="#logic.game_components.Rectangle.get_resource" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a LogicResource representing this Renderable</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Rectangle.reshape">
+<span class="sig-name descname"><span class="pre">reshape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dimensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Rectangle.reshape" title="Link to this definition">¶</a></dt>
+<dd><p>set the dimensions of this rectangle</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.game_components.Renderable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.game_components.</span></span><span class="sig-name descname"><span class="pre">Renderable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Renderable" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Transform" title="logic.game_components.Transform"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transform</span></code></a></p>
+<p>Abstract class representing a resource that can be rendered on a screen.</p>
+<p>It is derived from Transform, and as such has position, rotation and scaling attributes. It is however treated as a child of any pure Transform in the same GameObject.</p>
+<section id="id16">
+<h3>Attributes<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>_layer: int</dt><dd><p>a numeric value used for drawing order</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Renderable.get_resource">
+<span class="sig-name descname"><span class="pre">get_resource</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#logic.logic_resource.LogicResource" title="logic.logic_resource.LogicResource"><span class="pre">LogicResource</span></a></span></span><a class="headerlink" href="#logic.game_components.Renderable.get_resource" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a LogicResource representing this Renderable</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.game_components.Script">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.game_components.</span></span><span class="sig-name descname"><span class="pre">Script</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Script" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Component" title="logic.game_components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a></p>
+<p>A general class for defining Script objects, which are the main way of defining custom behaviour</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Script.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Script.init" title="Link to this definition">¶</a></dt>
+<dd><p>Called only once before anything else</p>
+<p>Use this method to do final object preparations. In particular all calls to other objects that could be in __init__, should be here to avoid
+calling objects that do not exist yet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Script.on_event">
+<span class="sig-name descname"><span class="pre">on_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Script.on_event" title="Link to this definition">¶</a></dt>
+<dd><p>Called to handle an event</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Script.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Script.update" title="Link to this definition">¶</a></dt>
+<dd><p>Called every frame</p>
+<p>This method is responsible for processing the object after a frame.</p>
+<section id="id17">
+<h3>Parameters<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>delta_time:float</dt><dd><p>time [in seconds] that was elapsed since the last frame</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.game_components.Text">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.game_components.</span></span><span class="sig-name descname"><span class="pre">Text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Text" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Renderable" title="logic.game_components.Renderable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Renderable</span></code></a></p>
+<p>A class representing a text to be rendered</p>
+<section id="id18">
+<h3>Attributes<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>_text: str</dt><dd><p>the text to be rendered</p>
+</dd>
+<dt>_font: str</dt><dd><p>a path to a .ttf file containing the desired font</p>
+</dd>
+<dt>_color: tuple[int, int, int] | tuple[int, int, int, int]</dt><dd><p>color of the text(supports transparency)</p>
+</dd>
+<dt>_font_size: int</dt><dd><p>font size</p>
+</dd>
+<dt>default_font: str</dt><dd><p>the font used when font is not specified</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.game_components.Text.default_font">
+<span class="sig-name descname"><span class="pre">default_font</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'resources\\fonts\\04B_30__.TTF'</span></em><a class="headerlink" href="#logic.game_components.Text.default_font" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Text.get_resource">
+<span class="sig-name descname"><span class="pre">get_resource</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#logic.logic_resource.LogicResource" title="logic.logic_resource.LogicResource"><span class="pre">LogicResource</span></a></span></span><a class="headerlink" href="#logic.game_components.Text.get_resource" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a LogicResource representing this Renderable</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.game_components.Transform">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.game_components.</span></span><span class="sig-name descname"><span class="pre">Transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Transform" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Component" title="logic.game_components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a></p>
+<p>Component that represents logically a position, rotation and scaling of an object</p>
+<section id="id19">
+<h3>Attributes<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>_x, _y: float</dt><dd><p>x and y coordinates of the object</p>
+</dd>
+<dt>_scale_x, _scale_y: float</dt><dd><p>x and y factors of scaling for the object</p>
+</dd>
+<dt>_angle: float</dt><dd><p>the angle [in degrees] by which the object is rotated counter-clockwise</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Transform.get_global">
+<span class="sig-name descname"><span class="pre">get_global</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#logic.game_components.Transform.get_global" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the global postition of this Transform</p>
+<p>A transform defines its own coordinate system. If another Transform is a Component of a GameObject parented to this Transform’s parent, then the child’s Transform is treated
+as residing in the parent’s coordinate system and its values are relative to it. Crucially, rotation of the parent means rotating its whole coordinate system.</p>
+<section id="returns">
+<h4>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h4>
+<dl class="simple">
+<dt>tuple[float, float, float, float, float]:</dt><dd><p>5 float values, in order: x, y, angle, x scale factor, y scale factor</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Transform.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Transform.move" title="Link to this definition">¶</a></dt>
+<dd><p>move the transform by dx and dy</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Transform.rotate">
+<span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Transform.rotate" title="Link to this definition">¶</a></dt>
+<dd><p>rotate this transform clockwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.game_components.Transform.scale">
+<span class="sig-name descname"><span class="pre">scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.game_components.Transform.scale" title="Link to this definition">¶</a></dt>
+<dd><p>set this transform’s scale</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-logic.light">
+<span id="logic-light-module"></span><h2>logic.light module<a class="headerlink" href="#module-logic.light" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.light.LightScript">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.light.</span></span><span class="sig-name descname"><span class="pre">LightScript</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sprite_controller</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.sprite_controller.SpriteController" title="logic.sprite_controller.SpriteController"><span class="pre">SpriteController</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">darkness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Rectangle" title="logic.game_components.Rectangle"><span class="pre">Rectangle</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.light.LightScript" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Script" title="logic.game_components.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.light.LightScript.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.light.LightScript.init" title="Link to this definition">¶</a></dt>
+<dd><p>Called only once before anything else</p>
+<p>Use this method to do final object preparations. In particular all calls to other objects that could be in __init__, should be here to avoid
+calling objects that do not exist yet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.light.LightScript.toggle_light">
+<span class="sig-name descname"><span class="pre">toggle_light</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.light.LightScript.toggle_light" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-logic.logic_resource">
+<span id="logic-logic-resource-module"></span><h2>logic.logic_resource module<a class="headerlink" href="#module-logic.logic_resource" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.logic_resource.LogicResource">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.logic_resource.</span></span><span class="sig-name descname"><span class="pre">LogicResource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.logic_resource.ResourceType" title="logic.logic_resource.ResourceType"><span class="pre">ResourceType</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.logic_resource.LogicResource" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing a resource to be passed along to the renderer.</p>
+<p>The resource parameters are given as kwargs and stored as attributes of the object. It is up to the individual Renderable objects to define what data is passed
+along, and up to the renderer to decide what to do with this data.</p>
+<p>The only required attribute is the type, which is defined as an Enum</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.logic_resource.ResourceType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.logic_resource.</span></span><span class="sig-name descname"><span class="pre">ResourceType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.logic_resource.ResourceType" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.logic_resource.ResourceType.IMAGE">
+<span class="sig-name descname"><span class="pre">IMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#logic.logic_resource.ResourceType.IMAGE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.logic_resource.ResourceType.SHAPE">
+<span class="sig-name descname"><span class="pre">SHAPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#logic.logic_resource.ResourceType.SHAPE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.logic_resource.ResourceType.SOUND">
+<span class="sig-name descname"><span class="pre">SOUND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#logic.logic_resource.ResourceType.SOUND" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.logic_resource.ResourceType.TEXT">
+<span class="sig-name descname"><span class="pre">TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#logic.logic_resource.ResourceType.TEXT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.logic_resource.ResourceType.TILES">
+<span class="sig-name descname"><span class="pre">TILES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#logic.logic_resource.ResourceType.TILES" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-logic.memory_game">
+<span id="logic-memory-game-module"></span><h2>logic.memory_game module<a class="headerlink" href="#module-logic.memory_game" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.memory_game.MemoryScript">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.memory_game.</span></span><span class="sig-name descname"><span class="pre">MemoryScript</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">button1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Rectangle" title="logic.game_components.Rectangle"><span class="pre">Rectangle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">button2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Rectangle" title="logic.game_components.Rectangle"><span class="pre">Rectangle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">button3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Rectangle" title="logic.game_components.Rectangle"><span class="pre">Rectangle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">button4</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Rectangle" title="logic.game_components.Rectangle"><span class="pre">Rectangle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fail_menu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_display</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Text" title="logic.game_components.Text"><span class="pre">Text</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_score_display</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Text" title="logic.game_components.Text"><span class="pre">Text</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_score_display</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Text" title="logic.game_components.Text"><span class="pre">Text</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.memory_game.MemoryScript" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Script" title="logic.game_components.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.memory_game.MemoryScript.b1">
+<span class="sig-name descname"><span class="pre">b1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.memory_game.MemoryScript.b1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.memory_game.MemoryScript.b2">
+<span class="sig-name descname"><span class="pre">b2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.memory_game.MemoryScript.b2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.memory_game.MemoryScript.b3">
+<span class="sig-name descname"><span class="pre">b3</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.memory_game.MemoryScript.b3" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.memory_game.MemoryScript.b4">
+<span class="sig-name descname"><span class="pre">b4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.memory_game.MemoryScript.b4" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.memory_game.MemoryScript.darken_button">
+<span class="sig-name descname"><span class="pre">darken_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.memory_game.MemoryScript.darken_button" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.memory_game.MemoryScript.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.memory_game.MemoryScript.init" title="Link to this definition">¶</a></dt>
+<dd><p>Called only once before anything else</p>
+<p>Use this method to do final object preparations. In particular all calls to other objects that could be in __init__, should be here to avoid
+calling objects that do not exist yet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.memory_game.MemoryScript.light_button">
+<span class="sig-name descname"><span class="pre">light_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.memory_game.MemoryScript.light_button" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.memory_game.MemoryScript.retry">
+<span class="sig-name descname"><span class="pre">retry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.memory_game.MemoryScript.retry" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.memory_game.MemoryScript.return_home">
+<span class="sig-name descname"><span class="pre">return_home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.memory_game.MemoryScript.return_home" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.memory_game.MemoryScript.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.memory_game.MemoryScript.update" title="Link to this definition">¶</a></dt>
+<dd><p>Called every frame</p>
+<p>This method is responsible for processing the object after a frame.</p>
+<section id="id20">
+<h3>Parameters<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>delta_time:float</dt><dd><p>time [in seconds] that was elapsed since the last frame</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-logic.menus">
+<span id="logic-menus-module"></span><h2>logic.menus module<a class="headerlink" href="#module-logic.menus" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.menus.MenuScript">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.menus.</span></span><span class="sig-name descname"><span class="pre">MenuScript</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">activate_messages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deactivate_messages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">menu_elements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#logic.game_components.Component" title="logic.game_components.Component"><span class="pre">Component</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_elements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#logic.game_components.Component" title="logic.game_components.Component"><span class="pre">Component</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.menus.MenuScript" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Script" title="logic.game_components.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a></p>
+<p>A utility class for managing object collections</p>
+<p>The name comes from the initial use of this class, however it is better to think of it as a generic toggle manager for sets of objects.
+It defines two sets of GameObjects that are activated/deactivated when a given message is given</p>
+<p>Because of the way messages are implemented, this class needs to be derived to work the way it’s intended (reacting to messages without special accomodation).
+However, creating potentially countless derivative classes by hand would be torture. So instead, this class’s constructor acts as a factory.
+Initializing a MenuScript object creates a new class named MenuScript#[id], which has given messages set as attribute names for the activate and deactivate methods.
+A MenuScript# is not a derivative of MenuScript, but of Script.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.menus.MenuScript.activate">
+<span class="sig-name descname"><span class="pre">activate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.menus.MenuScript.activate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.menus.MenuScript.deactivate">
+<span class="sig-name descname"><span class="pre">deactivate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.menus.MenuScript.deactivate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.menus.MenuScript.derivative_id">
+<span class="sig-name descname"><span class="pre">derivative_id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#logic.menus.MenuScript.derivative_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.menus.ShopScript">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.menus.</span></span><span class="sig-name descname"><span class="pre">ShopScript</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">miku</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.creature.CreatureBehaviour" title="logic.creature.CreatureBehaviour"><span class="pre">CreatureBehaviour</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">food</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.food.FoodScript" title="logic.food.FoodScript"><span class="pre">FoodScript</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">shop_display</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.sprite_controller.SpriteController" title="logic.sprite_controller.SpriteController"><span class="pre">SpriteController</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">price_display</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Text" title="logic.game_components.Text"><span class="pre">Text</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">funds_display</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Text" title="logic.game_components.Text"><span class="pre">Text</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.menus.ShopScript" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Script" title="logic.game_components.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.menus.ShopScript.buy">
+<span class="sig-name descname"><span class="pre">buy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.menus.ShopScript.buy" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.menus.ShopScript.next">
+<span class="sig-name descname"><span class="pre">next</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.menus.ShopScript.next" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.menus.ShopScript.prev">
+<span class="sig-name descname"><span class="pre">prev</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.menus.ShopScript.prev" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.menus.ShopScript.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.menus.ShopScript.update" title="Link to this definition">¶</a></dt>
+<dd><p>Called every frame</p>
+<p>This method is responsible for processing the object after a frame.</p>
+<section id="id21">
+<h3>Parameters<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>delta_time:float</dt><dd><p>time [in seconds] that was elapsed since the last frame</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-logic.progress_bar">
+<span id="logic-progress-bar-module"></span><h2>logic.progress_bar module<a class="headerlink" href="#module-logic.progress_bar" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.progress_bar.BarAligngment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.progress_bar.</span></span><span class="sig-name descname"><span class="pre">BarAligngment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.progress_bar.BarAligngment" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.progress_bar.BarAligngment.BOTTOMRIGHT">
+<span class="sig-name descname"><span class="pre">BOTTOMRIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#logic.progress_bar.BarAligngment.BOTTOMRIGHT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.progress_bar.BarAligngment.CENTER">
+<span class="sig-name descname"><span class="pre">CENTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#logic.progress_bar.BarAligngment.CENTER" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.progress_bar.BarAligngment.TOPLEFT">
+<span class="sig-name descname"><span class="pre">TOPLEFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#logic.progress_bar.BarAligngment.TOPLEFT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.progress_bar.BarMode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.progress_bar.</span></span><span class="sig-name descname"><span class="pre">BarMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.progress_bar.BarMode" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.progress_bar.BarMode.HORIZONTAL">
+<span class="sig-name descname"><span class="pre">HORIZONTAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#logic.progress_bar.BarMode.HORIZONTAL" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.progress_bar.BarMode.VERTICAL">
+<span class="sig-name descname"><span class="pre">VERTICAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#logic.progress_bar.BarMode.VERTICAL" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.progress_bar.ProgressBar">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.progress_bar.</span></span><span class="sig-name descname"><span class="pre">ProgressBar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bar_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Rectangle" title="logic.game_components.Rectangle"><span class="pre">Rectangle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.progress_bar.BarMode" title="logic.progress_bar.BarMode"><span class="pre">BarMode</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">BarMode.VERTICAL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alignment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">BarAligngment.CENTER</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.progress_bar.ProgressBar" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Script" title="logic.game_components.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a></p>
+<p>A Script for managing a progress bar with automatic alignment</p>
+<section id="id22">
+<h3>Attributes<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>max_value, start_value: int</dt><dd><p>self explanatory</p>
+</dd>
+<dt>bar_image: Rectangle</dt><dd><p>the rectangle this will be operating on</p>
+</dd>
+<dt>mode: BarMode</dt><dd><p>which way should the bar be scaled</p>
+</dd>
+<dt>alignment: BarAlignment</dt><dd><p>how to align the bar after scaling</p>
+</dd>
+<dt>color_map: list[tuple[int, tuple[int, int, int] | tuple[int, int, int, int]]]</dt><dd><p>optional, allows for dynamic color changes depending on the bar’s value</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.progress_bar.ProgressBar.set_value">
+<span class="sig-name descname"><span class="pre">set_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.progress_bar.ProgressBar.set_value" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-logic.scene">
+<span id="logic-scene-module"></span><h2>logic.scene module<a class="headerlink" href="#module-logic.scene" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.scene.Scene">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.scene.</span></span><span class="sig-name descname"><span class="pre">Scene</span></span><a class="headerlink" href="#logic.scene.Scene" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing some collection of game objects, responsible for managing them</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.scene.Scene.add_objects">
+<span class="sig-name descname"><span class="pre">add_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">objects</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.scene.Scene.add_objects" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.scene.Scene.get_resources">
+<span class="sig-name descname"><span class="pre">get_resources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#logic.logic_resource.LogicResource" title="logic.logic_resource.LogicResource"><span class="pre">LogicResource</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#logic.scene.Scene.get_resources" title="Link to this definition">¶</a></dt>
+<dd><p>returns all resources to be rendered this frame</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.scene.Scene.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logic.scene.Scene.init" title="Link to this definition">¶</a></dt>
+<dd><p>called once on the start</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.scene.Scene.on_event">
+<span class="sig-name descname"><span class="pre">on_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.scene.Scene.on_event" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.scene.Scene.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.scene.Scene.update" title="Link to this definition">¶</a></dt>
+<dd><p>Called every frame</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="logic.scene.from_json">
+<span class="sig-prename descclassname"><span class="pre">logic.scene.</span></span><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.scene.from_json" title="Link to this definition">¶</a></dt>
+<dd><p>Constructs a Scene object from a .json style description</p>
+</dd></dl>
+
+</section>
+<section id="module-logic.scene_changer">
+<span id="logic-scene-changer-module"></span><h2>logic.scene_changer module<a class="headerlink" href="#module-logic.scene_changer" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.scene_changer.SceneChanger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.scene_changer.</span></span><span class="sig-name descname"><span class="pre">SceneChanger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.scene_changer.SceneChanger" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Script" title="logic.game_components.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a></p>
+<p>A class for easily defining scene changes triggered by messages</p>
+<p>Similarly to MenuScript, this requires creating sister classes to work with the message API. This is done here the same way as it is in MenuScript:
+the constructor creates a new SceneChanger#[id] class and switches the initialized object’s __class__ attribute to it. The derived classes map messages to 
+scene aliases.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="logic.scene_changer.SceneChanger.derivative_id">
+<span class="sig-name descname"><span class="pre">derivative_id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#logic.scene_changer.SceneChanger.derivative_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-logic.sprite_controller">
+<span id="logic-sprite-controller-module"></span><h2>logic.sprite_controller module<a class="headerlink" href="#module-logic.sprite_controller" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.sprite_controller.SpriteController">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.sprite_controller.</span></span><span class="sig-name descname"><span class="pre">SpriteController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sprite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.Image" title="logic.game_components.Image"><span class="pre">Image</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sprite_grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.sprite_controller.SpriteController" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Script" title="logic.game_components.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a></p>
+<p>Script used for changing texture rects of a given image.</p>
+<section id="id23">
+<h3>Attributes<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>_sprite: Image</dt><dd><p>the image this will operate on</p>
+</dd>
+<dt>_grid: tuple[int, int]</dt><dd><p>definition of an n x m grid of euqally sized image cutouts. One cell is the size of _sprite</p>
+</dd>
+<dt>_origin: tuple[int, int]</dt><dd><p>grid origin point on the source image, the top left corner of the grid area</p>
+</dd>
+<dt>_current_id: int</dt><dd><p>the id of the currenmt sprite</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.sprite_controller.SpriteController.switch_sprite">
+<span class="sig-name descname"><span class="pre">switch_sprite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.sprite_controller.SpriteController.switch_sprite" title="Link to this definition">¶</a></dt>
+<dd><p>Changes _sprite’s texture_rect attribute to cover a different cell</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-logic.tilesets">
+<span id="logic-tilesets-module"></span><h2>logic.tilesets module<a class="headerlink" href="#module-logic.tilesets" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="logic.tilesets.TilesetImage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logic.tilesets.</span></span><span class="sig-name descname"><span class="pre">TilesetImage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#logic.game_components.GameObject" title="logic.game_components.GameObject"><span class="pre">GameObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texture_rect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logic.tilesets.TilesetImage" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#logic.game_components.Renderable" title="logic.game_components.Renderable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Renderable</span></code></a></p>
+<p>A class for logic representation of a tileset-constructed image</p>
+<section id="id24">
+<h3>Attributes<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>_source: str</dt><dd><p>a path to the source image</p>
+</dd>
+<dt>_rect: tuple[int, int, int, int]</dt><dd><p>cutout area containing the tileset</p>
+</dd>
+<dt>_grid: tuple[int, int, int, int]</dt><dd><p>a grid defining the individual tiles. in order: cells horizontally, cells vertically, cell width, cell height</p>
+</dd>
+<dt>_shape: tuple[int, int]</dt><dd><p>how many tiles horizontally and vertically will compose this image</p>
+</dd>
+<dt>_id: int</dt><dd><p>a helper attribute, used by the resource manager to cache constructed tile images</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="logic.tilesets.TilesetImage.get_resource">
+<span class="sig-name descname"><span class="pre">get_resource</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#logic.logic_resource.LogicResource" title="logic.logic_resource.LogicResource"><span class="pre">LogicResource</span></a></span></span><a class="headerlink" href="#logic.tilesets.TilesetImage.get_resource" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a LogicResource representing this Renderable</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-logic">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-logic" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">MikuPettingSimulator</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rendering.html">rendering package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">logic package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.buttons">logic.buttons module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.buttons.ButtonScript"><code class="docutils literal notranslate"><span class="pre">ButtonScript</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.context">logic.context module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.context.load_scene"><code class="docutils literal notranslate"><span class="pre">load_scene()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.context.load_scene_set_from_directory"><code class="docutils literal notranslate"><span class="pre">load_scene_set_from_directory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.context.set_by_alias"><code class="docutils literal notranslate"><span class="pre">set_by_alias()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.context.set_current_scene"><code class="docutils literal notranslate"><span class="pre">set_current_scene()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.context.update"><code class="docutils literal notranslate"><span class="pre">update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.creature">logic.creature module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.creature.CreatureBehaviour"><code class="docutils literal notranslate"><span class="pre">CreatureBehaviour</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.creature.MouthScript"><code class="docutils literal notranslate"><span class="pre">MouthScript</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.cursor">logic.cursor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.cursor.CursorScript"><code class="docutils literal notranslate"><span class="pre">CursorScript</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.food">logic.food module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.food.FoodCloneScript"><code class="docutils literal notranslate"><span class="pre">FoodCloneScript</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.food.FoodData"><code class="docutils literal notranslate"><span class="pre">FoodData</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.food.FoodScript"><code class="docutils literal notranslate"><span class="pre">FoodScript</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.game_components">logic.game_components module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.game_components.Component"><code class="docutils literal notranslate"><span class="pre">Component</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.game_components.GameObject"><code class="docutils literal notranslate"><span class="pre">GameObject</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.game_components.Hitbox"><code class="docutils literal notranslate"><span class="pre">Hitbox</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.game_components.Image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.game_components.Rectangle"><code class="docutils literal notranslate"><span class="pre">Rectangle</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.game_components.Renderable"><code class="docutils literal notranslate"><span class="pre">Renderable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.game_components.Script"><code class="docutils literal notranslate"><span class="pre">Script</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.game_components.Text"><code class="docutils literal notranslate"><span class="pre">Text</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.game_components.Transform"><code class="docutils literal notranslate"><span class="pre">Transform</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.light">logic.light module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.light.LightScript"><code class="docutils literal notranslate"><span class="pre">LightScript</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.logic_resource">logic.logic_resource module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.logic_resource.LogicResource"><code class="docutils literal notranslate"><span class="pre">LogicResource</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.logic_resource.ResourceType"><code class="docutils literal notranslate"><span class="pre">ResourceType</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.memory_game">logic.memory_game module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.memory_game.MemoryScript"><code class="docutils literal notranslate"><span class="pre">MemoryScript</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.menus">logic.menus module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.menus.MenuScript"><code class="docutils literal notranslate"><span class="pre">MenuScript</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.menus.ShopScript"><code class="docutils literal notranslate"><span class="pre">ShopScript</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.progress_bar">logic.progress_bar module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.progress_bar.BarAligngment"><code class="docutils literal notranslate"><span class="pre">BarAligngment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.progress_bar.BarMode"><code class="docutils literal notranslate"><span class="pre">BarMode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.progress_bar.ProgressBar"><code class="docutils literal notranslate"><span class="pre">ProgressBar</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.scene">logic.scene module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.scene.Scene"><code class="docutils literal notranslate"><span class="pre">Scene</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic.scene.from_json"><code class="docutils literal notranslate"><span class="pre">from_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.scene_changer">logic.scene_changer module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.scene_changer.SceneChanger"><code class="docutils literal notranslate"><span class="pre">SceneChanger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.sprite_controller">logic.sprite_controller module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.sprite_controller.SpriteController"><code class="docutils literal notranslate"><span class="pre">SpriteController</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic.tilesets">logic.tilesets module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logic.tilesets.TilesetImage"><code class="docutils literal notranslate"><span class="pre">TilesetImage</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-logic">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">src</a><ul>
+      <li>Previous: <a href="rendering.html" title="previous chapter">rendering package</a></li>
+      <li>Next: <a href="main.html" title="next chapter">main module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, s30680.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/logic.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -3,7 +3,26 @@ import logic.game_components as gc
 from logic.sprite_controller import SpriteController
 
 class CursorScript(gc.Script):
+    '''Script for the fake cursor.
+
+    The cursor is in fact a small hitbox with a sprite. A mouse button event leads to all hitboxes colliding with it to recieve a "mouse" message, alongside
+    the number of the button of the event (same as pygame) and wether it was pressed down.
+    
+    Any Script that should react to cursor clicks (like buttons) should implement a mouse(button, down) method.
+    '''
     def __init__(self, parent: gc.GameObject | None, transform: gc.Transform, hitbox: gc.Hitbox, window_height:int):
+        '''
+        Parameters
+        ----------
+        parent: GameObject
+            the object holding this script
+        transform: Transform
+            the Transorm that this cursor should reference
+        hitbox: Hitbox
+            the Hitbox that this cursor uses to check for hovering over objects
+        window_height: int
+            height of the window in pixels, required to accurately translate the cursor's position from screen space to game space.
+        '''
         gc.Script.__init__(self, parent)
         self._transform = transform
         self._hitbox = hitbox

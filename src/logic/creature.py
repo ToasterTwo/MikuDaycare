@@ -3,17 +3,17 @@ from logic.game_components import *
 from logic.sprite_controller import SpriteController
 from enum import Enum
 from logic.food import FoodData
-
+import logic.context as context
 
 class CreatureBehaviour(Script):
-
+    '''Script controlling most things in the main scene'''
     def __init__(self, parent: GameObject|None, happy_bar: GameObject, hungry_bar:GameObject, energy_bar:GameObject, coins_text:Text,
                  eyes: GameObject, mouth: GameObject):
         Script.__init__(self, parent)
         self._max_value = 100
         self._hunger = 100
         self._happiness = 100
-        self._energy = 10
+        self._energy = 100
         self._inner_clock : float = 0.
         self._happy_bar : GameObject = happy_bar
         self._hungry_bar: GameObject = hungry_bar
@@ -39,6 +39,10 @@ class CreatureBehaviour(Script):
         self._eyes_sprite:SpriteController = self._eyes.get_component(SpriteController) #type:ignore
     
     def update(self, delta_time: float):
+
+        self._energy -= context.global_vars.pop("energy", 0)
+        self._coins += context.global_vars.pop("score", 0)
+ 
         if not self._paused and not self._dead:
             self._inner_clock-=delta_time
         
@@ -101,27 +105,8 @@ class CreatureBehaviour(Script):
         
         self.resolve_state()
         self._coins_display._text = f"{self._coins:03}"
-            
 
-    def feed(self, food_data: FoodData):
-        if not self._dead and not self._sleeping:
-            if self._hunger < 95:
-                self._hunger = min(self._hunger+food_data.saturation, self._max_value)
-                self._hungry_bar.message("set_value", self._hunger)
-                food_data.amount-=1
     
-    def menu(self):
-        self._paused = True
-    
-    def unmenu(self):
-        self._paused = False
-
-    def pet(self):
-        if not self._dead and not self._sleeping:
-            self._happiness =  min(self._happiness+5, self._max_value)
-            self._happy_bar.message("set_value", self._happiness)
-            self._sprite_change_timer = 1
-
     def resolve_state(self):
         mouth_id = 0
         eyes_id = 0
@@ -161,6 +146,25 @@ class CreatureBehaviour(Script):
         
         self._eyes_sprite.switch_sprite(eyes_id)
         self._mouth_sprite.switch_sprite(mouth_id)
+            
+        
+    #message-activated
+
+
+    def feed(self, food_data: FoodData):
+        if not self._dead and not self._sleeping:
+            if self._hunger < 95:
+                self._hunger = min(self._hunger+food_data.saturation, self._max_value)
+                self._hungry_bar.message("set_value", self._hunger)
+                food_data.amount-=1
+    
+    def pet(self):
+        if not self._dead and not self._sleeping:
+            self._happiness =  min(self._happiness+5, self._max_value)
+            self._happy_bar.message("set_value", self._happiness)
+            self._sprite_change_timer = 1
+
+    
 
     def toggle_light(self):
         self._dark = not self._dark
@@ -173,6 +177,7 @@ class CreatureBehaviour(Script):
 
 
 class MouthScript(SpriteController):
+    '''Script controlling the mouth sprite. It used to do more but became simple utility with production'''
     def __init__(self, parent: GameObject, mouth_sprite: Image, sprite_grid: tuple[int, int], origin: tuple[int, int], food_box: Hitbox):
         SpriteController.__init__(self, parent, mouth_sprite, sprite_grid, origin)
         self.is_open: bool = False
@@ -186,19 +191,14 @@ class MouthScript(SpriteController):
         if not self._dead:
             tmp = self._hitbox.get_colliding()
             if self._food_box in tmp and not self.is_open:
-                self.do_open()
+                self.is_open = True
             elif not self._food_box in tmp and self.is_open:
-                self.do_close()
+                self.is_open = False
+
+    #message-activated
 
     def feed(self, food_data: FoodData):
         self._parent._parent.message("feed", food_data)
-
-
-    def do_open(self):
-        self.is_open = True
-    
-    def do_close(self):
-        self.is_open = False
     
     def die(self):
         self._dead = True

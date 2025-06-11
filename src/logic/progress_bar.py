@@ -13,12 +13,27 @@ class BarAligngment(Enum):
 
 
 class ProgressBar(Script):
+    '''A Script for managing a progress bar with automatic alignment
+    
+    Attributes
+    ----------
+    max_value, start_value: int
+        self explanatory
+    bar_image: Rectangle
+        the rectangle this will be operating on
+    mode: BarMode
+        which way should the bar be scaled
+    alignment: BarAlignment
+        how to align the bar after scaling
+    color_map: list[tuple[int, tuple[int, int, int] | tuple[int, int, int, int]]]
+        optional, allows for dynamic color changes depending on the bar's value
+    '''
     def __init__(self, parent: GameObject |None, 
                  max_value: int, start_value: int, 
                  bar_image: Rectangle, 
                  mode: BarMode | str = BarMode.VERTICAL, 
                  alignment = BarAligngment.CENTER,
-                 color_map: list[tuple[int, tuple[int, ...]]] = []):
+                 color_map: list[tuple[int, tuple[int, int, int] | tuple[int, int, int, int]]] = []):
         Script.__init__(self, parent)
         self._max_value = max_value
         self._value = start_value

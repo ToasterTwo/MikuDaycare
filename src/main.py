@@ -1,7 +1,6 @@
+from logic import *
 from rendering import window
 import pygame
-import test_scene as ts
-from logic import context
 
 class Game:
 
@@ -11,7 +10,7 @@ class Game:
 
     def run(self):
         context.load_scene_set_from_directory(r"resources\scenes")
-        context.set_by_alias("main")
+        context.set_by_alias("start")
         
         self._running = True
         clock = pygame.time.Clock()

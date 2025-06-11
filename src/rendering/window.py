@@ -6,6 +6,7 @@ except ModuleNotFoundError:
 from logic import logic_resource as lr
 
 class Window:
+    '''A class representing a window, responsible for rendering images'''
     def __init__(self, size:tuple[int, int], title: str):
         if not pygame.get_init():
             pygame.init()
@@ -18,6 +19,7 @@ class Window:
         pygame.display.quit()
     
     def render(self, objects: tuple[lr.LogicResource, ...]):
+        '''renders all given objects'''
         self._window.fill((0, 0, 0))
         
         for obj in sorted(objects, key = lambda o: o.layer):
